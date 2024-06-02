@@ -1,0 +1,12 @@
+{
+  "name": "silverdev-challenge",
+  "version": "1.0.0",
+  "description": "Silver Dev Challenge - B2B Sales Tool from Leonardo Guerberg.",
+  "main": "index.js",
+  "scripts": {
+    "all:dev": "pnpm run --parallel dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
