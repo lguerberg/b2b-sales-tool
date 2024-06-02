@@ -4,7 +4,13 @@
   "description": "Silver Dev Challenge - B2B Sales Tool from Leonardo Guerberg.",
   "main": "index.js",
   "scripts": {
-    "all:dev": "pnpm run --parallel dev"
+    "all:dev": "pnpm run --parallel dev",
+    "format": "pnpm run --parallel format",
+    "lint:fix": "pnpm run --parallel lint:fix",
+    "dep:upgrade": "manypkg upgrade"
+  },
+  "devDependencies": {
+    "@manypkg/cli": "^0.21.0"
   },
   "keywords": [],
   "author": "",
