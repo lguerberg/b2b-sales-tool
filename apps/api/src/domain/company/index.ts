@@ -22,4 +22,5 @@ export interface CompanyOnboard {
   mediumTicketPrice: number
   targetIndustry: string[]
   salesSpeechContext: string
+  calendlyUrl: string
 }

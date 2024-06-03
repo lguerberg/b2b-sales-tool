@@ -27,3 +27,9 @@ export interface CampaignEmail {
   isClicked: boolean
   status: MessageStatus
 }
+
+export interface CampaignEmailData {
+  subject: string
+  body: string
+  calendlyUrl: string
+}

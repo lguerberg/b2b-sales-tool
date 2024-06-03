@@ -19,3 +19,7 @@ export interface Lead {
     isDecisionMaker: boolean
   }
 }
+
+export interface LeadWithMessage extends Lead {
+  message: string
+}
