@@ -4,6 +4,7 @@ import { JwtService } from '@nestjs/jwt'
 import { UserRepository } from '@/domain/user/repository'
 
 import { UserUnauthorizedError } from '../../infrastructure/errors/auth/userUnauthorized.error'
+import { comparePasswords } from '../../infrastructure/utils/password.utils'
 
 @Injectable()
 export class LoginUser {
@@ -18,8 +19,8 @@ export class LoginUser {
       throw new UserUnauthorizedError()
     }
 
-    // TODO Hash passwords
-    if (user.password !== password) {
+    const passwordsMatch = await comparePasswords(password, user.password)
+    if (!passwordsMatch) {
       throw new UserUnauthorizedError()
     }
 
