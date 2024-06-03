@@ -7,5 +7,5 @@ export interface User {
   lastName: string
   password: string
   avatarUrl?: string
-  company: Company
+  company?: Company
 }

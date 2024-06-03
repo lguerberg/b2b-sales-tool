@@ -8,6 +8,9 @@
     "target": "es2017",
     "sourceMap": true,
     "outDir": "./dist",
+    "paths": {
+      "@/domain/*": ["./apps/api/src/domain/*"]
+    }
   }
 }
 
