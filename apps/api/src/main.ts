@@ -8,7 +8,6 @@ async function bootstrap() {
   app.enableCors()
   const trpc = app.get(TrpcRouter)
   trpc.applyMiddleware(app)
-  // TODO Port to .env
-  await app.listen(4000)
+  await app.listen(parseInt(process.env.PORT || '4000', 10))
 }
 bootstrap()
