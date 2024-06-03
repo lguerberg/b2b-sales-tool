@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "all:dev": "pnpm run --parallel dev",
+    "api:dev": "docker-compose -f docker/docker-compose.yml up -d",
+    "api:down": "docker-compose -f docker/docker-compose.yml down",
     "format": "pnpm run --parallel format",
     "lint:fix": "pnpm run --parallel lint:fix",
     "dep:upgrade": "manypkg upgrade"

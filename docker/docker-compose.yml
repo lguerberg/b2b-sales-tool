@@ -1,0 +1,68 @@
+version: '3.9'
+
+services:
+  core:
+    container_name: sales-core-api
+    build:
+      context: ../
+      dockerfile: docker/core/local.dockerfile
+    restart: always
+    volumes:
+      - ../apps/api/src:/app/apps/api/src
+      - ../apps/api/prisma:/app/apps/api/prisma
+    env_file:
+      - ../apps/api/.env
+    environment:
+      - PORT=3001
+    ports:
+      - 3001:3001
+      - 5555:5555
+    networks:
+      - sales-network
+
+  db:
+    image: postgres:latest
+    container_name: sales-db
+    restart: always
+    environment:
+      POSTGRES_USER: sales
+      POSTGRES_PASSWORD: sales
+      POSTGRES_DB: sales
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - sales-network
+
+  typesense:
+    container_name: sales-typesense
+    image: typesense/typesense:0.25.1
+    entrypoint: sh -c "/opt/typesense-server --data-dir /data --api-key=sales --enable-cors"
+    ports:
+      - 8108:8108
+    volumes:
+      - typesense:/data
+    networks:
+      - sales-network
+
+  redis:
+    image: redis:latest
+    container_name: sales-redis
+    ports:
+      - 6379:6379
+    volumes:
+      - redis:/data
+    networks:
+      - sales-network
+
+volumes:
+  pgdata:
+    driver: local
+  typesense:
+    driver: local
+  redis:
+    driver: local
+
+networks:
+  sales-network:
