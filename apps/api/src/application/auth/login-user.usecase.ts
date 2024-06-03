@@ -1,9 +1,11 @@
+import { Injectable } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 
 import { UserRepository } from '@/domain/user/repository'
 
 import { UserUnauthorizedError } from '../../infrastructure/errors/auth/userUnauthorized.error'
 
+@Injectable()
 export class LoginUser {
   constructor(
     private userRepository: UserRepository,

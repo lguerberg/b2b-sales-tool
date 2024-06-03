@@ -1,9 +1,12 @@
+import { Injectable } from '@nestjs/common'
+
 import { User } from '@/domain/user'
 import { UserRepository } from '@/domain/user/repository'
 
 import { mapPrismaUserToDomain } from '../../mappers/user.mapper'
 import { PrismaService } from '../../services/prisma.service'
 
+@Injectable()
 export class PrismaUserRepository implements UserRepository {
   constructor(private prisma: PrismaService) {}
 

@@ -1,8 +1,14 @@
 import { Module } from '@nestjs/common'
 import { JwtModule } from '@nestjs/jwt'
 
-import { LoginUser } from '../../application/auth/login-user'
+import { UserRepository } from '@/domain/user/repository'
+
+import { LoginUser } from '../../application/auth/login-user.usecase'
+import { AuthController } from '../controllers/auth.controller'
+import { PrismaUserRepository } from '../repositories/user/prisma.repository'
 import { PrismaService } from '../services/prisma.service'
+
+const USE_CASES = [LoginUser]
 
 @Module({
   imports: [
@@ -12,8 +18,15 @@ import { PrismaService } from '../services/prisma.service'
       signOptions: { expiresIn: process.env.JWT_EXPIRES_IN || '1w' },
     }),
   ],
-  providers: [PrismaService],
-  controllers: [],
+  providers: [
+    PrismaService,
+    {
+      provide: UserRepository,
+      useClass: PrismaUserRepository,
+    },
+    ...USE_CASES,
+  ],
+  controllers: [AuthController],
   exports: [LoginUser],
 })
 export class AuthModule {}
