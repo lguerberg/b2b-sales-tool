@@ -10,6 +10,18 @@ import { PrismaService } from '../../services/prisma.service'
 export class PrismaLeadRepository implements LeadRepository {
   constructor(private prisma: PrismaService) {}
 
+  async findByGroupId(groupId: string): Promise<Lead[]> {
+    const prismaLeads = await this.prisma.groupLeads.findMany({
+      where: {
+        groupId,
+      },
+      include: {
+        lead: true,
+      },
+    })
+    return prismaLeads.map(groupLead => mapPrismaLeadToDomain(groupLead.lead))
+  }
+
   async findManyByIds(leadIds: string[]): Promise<Lead[]> {
     const prismaLeads = await this.prisma.lead.findMany({
       where: {

@@ -9,6 +9,7 @@ export const mapPrismaGroupToDomain = (prismaGroup: PrismaGroup): Group =>
     id: prismaGroup.id,
     name: prismaGroup.name,
     description: prismaGroup.description || '',
+    ownerId: prismaGroup.userCreatedId,
   }) satisfies Group
 
 export const mapToGroupResponse = (group: Group) =>

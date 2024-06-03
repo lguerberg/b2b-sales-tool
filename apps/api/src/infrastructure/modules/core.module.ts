@@ -7,6 +7,7 @@ import { LeadRepository } from '@/domain/lead/repository'
 import { UserRepository } from '@/domain/user/repository'
 
 import { CreateGroup } from '../../application/group/create-group.usecase'
+import { GetGroupLeads } from '../../application/group/get-group-leads'
 import { GetLeadDetails } from '../../application/lead/get-lead-details.usecase'
 import { GroupController } from '../controllers/group.controller'
 import { LeadController } from '../controllers/lead.controller'
@@ -17,7 +18,7 @@ import { PrismaUserRepository } from '../repositories/user/prisma.repository'
 import { PrismaService } from '../services/prisma.service'
 import { AuthModule } from './auth.module'
 
-const USE_CASES = [GetLeadDetails, CreateGroup]
+const USE_CASES = [GetLeadDetails, CreateGroup, GetGroupLeads]
 
 @Module({
   imports: [AuthModule],

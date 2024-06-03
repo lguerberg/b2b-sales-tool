@@ -10,6 +10,18 @@ import { PrismaService } from '../../services/prisma.service'
 export class PrismaGroupRepository implements GroupRepository {
   constructor(private prisma: PrismaService) {}
 
+  async findById(id: string): Promise<Group | null> {
+    const prismaGroup = await this.prisma.group.findUnique({
+      where: {
+        id,
+      },
+    })
+    if (!prismaGroup) {
+      return null
+    }
+    return mapPrismaGroupToDomain(prismaGroup)
+  }
+
   async create(creatorId: string, leadIds: string[], data: Partial<Group>): Promise<Group> {
     const prismaGroup = await this.prisma.group.create({
       data: {
