@@ -1,7 +1,7 @@
 import { Body, Controller, Post, UsePipes } from '@nestjs/common'
 
 import { LoginUser } from '../../application/auth/login-user.usecase'
-import { Public } from '../decorators/public'
+import { Public } from '../decorators/public.decorator'
 import { ValidationPipe } from '../pipes/validation.pipe'
 import { LoginBody, loginBody } from '../schemas/auth/login.schema'
 
