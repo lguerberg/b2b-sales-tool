@@ -1,9 +1,252 @@
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["multiSchema"]
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String  @id @default(uuid())
+  email     String  @unique
+  firstName String
+  lastName  String
+  password  String
+  avatarUrl String?
+
+  company   Company @relation(fields: [companyId], references: [id])
+  companyId String
+
+  groups    Group[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("user")
+}
+
+model Company {
+  id             String      @id @default(uuid())
+  name           String
+  logoUrl        String?
+  primaryColor   String?
+  secondaryColor String?
+  size           CompanySize
+  industry       String
+  type           String
+
+  hqLocation   Location @relation(fields: [hqLocationId], references: [id])
+  hqLocationId String
+
+  onboard CompanyOnboard?
+
+  users        User[]
+  integrations CompanyIntegration[]
+  currentLeads Lead[]               @relation("currentCompany")
+  pastLeads    Lead[]               @relation("pastCompany")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("company")
+}
+
+model CompanyOnboard {
+  id        String  @id @default(uuid())
+  company   Company @relation(fields: [companyId], references: [id])
+  companyId String  @unique
+
+  conversionRate     Int
+  mediumTicketPrice  Int
+  targetIndustry     String
+  salesSpeechContext String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("company_onboard")
+}
+
+model CompanyIntegration {
+  id       String              @id @default(uuid())
+  provider IntegrationProvider
+  key      String
+
+  company   Company @relation(fields: [companyId], references: [id])
+  companyId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("company_integration")
+}
+
+model Location {
+  id        String @id @default(uuid())
+  city      String
+  country   String
+  continent String
+
+  companies Company[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("location")
+}
+
+model Group {
+  id            String  @id @default(uuid())
+  name          String
+  description   String?
+  userCreated   User    @relation(fields: [userCreatedId], references: [id])
+  userCreatedId String
+
+  campaings Campaign[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("group")
+}
+
+model Campaign {
+  id          String  @id @default(uuid())
+  name        String
+  description String?
+
+  emailsSentCount        Int
+  emailsOpenedCount      Int
+  emailsFailedCount      Int
+  emailsClickedCount     Int
+  meetingsScheduledCount Int
+  status                 CampaingStatus
+
+  groups  Group  @relation(fields: [groupId], references: [id])
+  groupId String
+
+  emails CampaignEmail[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("campaign")
+}
+
+model CampaignEmail {
+  id     String @id @default(uuid())
+  lead   Lead   @relation(fields: [leadId], references: [id])
+  leadId String
+
+  campaign   Campaign @relation(fields: [campaignId], references: [id])
+  campaignId String
+
+  subject String
+  content String
+
+  openedAt     DateTime?
+  isClicked    Boolean
+  status       MessageStatus
+  retriesCount Int           @default(0)
+  error        String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("campaign_email")
+}
+
+model Lead {
+  id                     String    @id @default(uuid())
+  firstName              String
+  lastName               String
+  email                  String
+  phone                  String?
+  seniority              Seniority
+  yearsInCurrentPosition Int
+  enrichedSummary        String
+  jobDescription         String
+  jobTitle               String
+  isDecisionMaker        Boolean
+
+  currentCompany   Company @relation(fields: [currentCompanyId], references: [id], name: "currentCompany")
+  currentCompanyId String
+
+  pastCompany   Company @relation(fields: [pastCompanyId], references: [id], name: "pastCompany")
+  pastCompanyId String
+
+  emails CampaignEmail[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("lead")
+}
+
+model CompanyType {
+  id   String @id @default(uuid())
+  name String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("company_type")
+}
+
+model CompanyIndustry {
+  id   String @id @default(uuid())
+  name String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("company_industry")
+}
+
+enum CompanySize {
+  SELF_EMPLOYED
+  ONE_TO_TEN
+  ELEVEN_TO_FIFTY
+  FIFTY_ONE_TO_TWO_HUNDRED
+  TWO_HUNDRED_ONE_TO_FIVE_HUNDRED
+  FIVE_HUNDRED_ONE_TO_ONE_THOUSAND
+  ONE_THOUSAND_ONE_TO_FIVE_THOUSAND
+
+  @@map("company_size")
+}
+
+enum CampaingStatus {
+  PENDING
+  CREATING
+  SENDING
+  SENT
+
+  @@map("campaign_status")
+}
+
+enum IntegrationProvider {
+  SENGRID
+  CALENDLY
+
+  @@map("integration_provider")
+}
+
+enum Seniority {
+  JR
+  SSR
+  SR
+  STAFF
+  MANAGER
+  C_LEVEL
+
+  @@map("seniority")
+}
+
+enum MessageStatus {
+  PENDING
+  SENDING
+  FAILED
+  SUCCESS
+
+  @@map("message_status")
 }
