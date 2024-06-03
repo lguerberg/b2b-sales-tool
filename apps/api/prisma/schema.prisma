@@ -58,7 +58,7 @@ model CompanyOnboard {
 
   conversionRate     Int
   mediumTicketPrice  Int
-  targetIndustry     String
+  targetIndustry     String[]
   salesSpeechContext String
 
   createdAt DateTime @default(now())
