@@ -1,7 +1,9 @@
-import { Body, Controller, Post } from '@nestjs/common'
+import { Body, Controller, Post, UsePipes } from '@nestjs/common'
 
 import { LoginUser } from '../../application/auth/login-user.usecase'
 import { Public } from '../decorators/public'
+import { ValidationPipe } from '../pipes/validation.pipe'
+import { LoginBody, loginBody } from '../schemas/auth/login.schema'
 
 @Controller('auth')
 export class AuthController {
@@ -9,11 +11,10 @@ export class AuthController {
 
   @Public()
   @Post('login')
-  // TODO Move body to schema and use Zod validations
-  async login(@Body() body: { email: string; password: string }) {
-    const token = await this.loginService.execute(body.email, body.password)
+  @UsePipes(new ValidationPipe(loginBody))
+  async login(@Body() body: LoginBody) {
     return {
-      token,
+      token: await this.loginService.execute(body.email, body.password),
     }
   }
 }
