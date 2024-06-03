@@ -1,3 +1,5 @@
+import { HttpStatus } from '@nestjs/common'
+
 export enum ErrorCodes {
   AUTH_NO_TOKEN = 2000,
   AUTH_USER_UNAUTHORIZED = 2001,
@@ -7,6 +9,7 @@ export enum ErrorCodes {
   DOMAIN_VALIDATION_ERROR = 9002,
   ENTITY_NOT_FOUND_ERROR = 9003,
   ENTITY_NOT_BELONG_ERROR = 9004,
+  ROUTE_NOT_FOUND_ERROR = 9998,
   INTERNAL_SERVER_ERROR = 9999,
 }
 
@@ -20,20 +23,22 @@ export const getErrorMessageByInternalCode = {
   [ErrorCodes.INTERNAL_SERVER_ERROR]: 'Internal server error',
   [ErrorCodes.ENTITY_NOT_FOUND_ERROR]: 'Entity not found',
   [ErrorCodes.ENTITY_NOT_BELONG_ERROR]: 'Entity does not belong to user',
+  [ErrorCodes.ROUTE_NOT_FOUND_ERROR]: 'Route not found',
 } satisfies {
   [key in ErrorCodes]: string
 }
 
 export const getStatusCodeByInternalCode = {
-  [ErrorCodes.AUTH_NO_TOKEN]: 401,
-  [ErrorCodes.AUTH_USER_UNAUTHORIZED]: 401,
-  [ErrorCodes.AUTH_USER_FORBIDDEN]: 403,
-  [ErrorCodes.INVALID_API_KEY]: 401,
-  [ErrorCodes.SCHEMA_VALIDATION_ERROR]: 400,
-  [ErrorCodes.DOMAIN_VALIDATION_ERROR]: 400,
-  [ErrorCodes.ENTITY_NOT_BELONG_ERROR]: 400,
-  [ErrorCodes.ENTITY_NOT_FOUND_ERROR]: 404,
-  [ErrorCodes.INTERNAL_SERVER_ERROR]: 503,
+  [ErrorCodes.AUTH_NO_TOKEN]: HttpStatus.UNAUTHORIZED,
+  [ErrorCodes.AUTH_USER_UNAUTHORIZED]: HttpStatus.UNAUTHORIZED,
+  [ErrorCodes.AUTH_USER_FORBIDDEN]: HttpStatus.FORBIDDEN,
+  [ErrorCodes.INVALID_API_KEY]: HttpStatus.UNAUTHORIZED,
+  [ErrorCodes.SCHEMA_VALIDATION_ERROR]: HttpStatus.BAD_REQUEST,
+  [ErrorCodes.DOMAIN_VALIDATION_ERROR]: HttpStatus.BAD_REQUEST,
+  [ErrorCodes.ENTITY_NOT_BELONG_ERROR]: HttpStatus.BAD_REQUEST,
+  [ErrorCodes.ENTITY_NOT_FOUND_ERROR]: HttpStatus.NOT_FOUND,
+  [ErrorCodes.ROUTE_NOT_FOUND_ERROR]: HttpStatus.NOT_FOUND,
+  [ErrorCodes.INTERNAL_SERVER_ERROR]: HttpStatus.INTERNAL_SERVER_ERROR,
 } satisfies {
   [key in ErrorCodes]: number
 }
