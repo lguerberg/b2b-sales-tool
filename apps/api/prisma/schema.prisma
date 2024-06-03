@@ -60,6 +60,7 @@ model CompanyOnboard {
   mediumTicketPrice  Int
   targetIndustry     String[]
   salesSpeechContext String
+  calendlyUrl        String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -130,14 +131,14 @@ model Campaign {
   name        String
   description String?
 
-  emailsSentCount        Int
-  emailsOpenedCount      Int
-  emailsFailedCount      Int
-  emailsClickedCount     Int
-  meetingsScheduledCount Int
-  status                 CampaingStatus
+  emailsSentCount        Int            @default(0)
+  emailsOpenedCount      Int            @default(0)
+  emailsFailedCount      Int            @default(0)
+  emailsClickedCount     Int            @default(0)
+  meetingsScheduledCount Int            @default(0)
+  status                 CampaingStatus @default(PENDING)
 
-  groups  Group  @relation(fields: [groupId], references: [id])
+  group   Group  @relation(fields: [groupId], references: [id])
   groupId String
 
   emails CampaignEmail[]
@@ -156,12 +157,13 @@ model CampaignEmail {
   campaign   Campaign @relation(fields: [campaignId], references: [id])
   campaignId String
 
-  subject String
-  content String
+  subject     String
+  content     String
+  calendlyUrl String
 
   openedAt     DateTime?
-  isClicked    Boolean
-  status       MessageStatus
+  isClicked    Boolean       @default(false)
+  status       MessageStatus @default(PENDING)
   retriesCount Int           @default(0)
   error        String?
 
