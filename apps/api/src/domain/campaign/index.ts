@@ -1,11 +1,14 @@
 import { CampaingStatus, MessageStatus } from '@prisma/client'
 
+import { Group } from '../group'
+
 export interface Campaign {
   id: string
   name: string
   description: string
   status: CampaingStatus
   emails: CampaignEmail[]
+  group: Group
   analytics: {
     emailsSentCount: number
     emailsOpenedCount: number

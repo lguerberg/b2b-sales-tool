@@ -3,13 +3,16 @@ import { Reflector } from '@nestjs/core'
 import { JwtService } from '@nestjs/jwt'
 import { Request } from 'express'
 
-import { IS_PUBLIC_KEY } from '../decorators/public'
+import { UserRepository } from '@/domain/user/repository'
+
+import { IS_PUBLIC_KEY } from '../decorators/public.decorator'
 import { UserUnauthorizedError } from '../errors/auth/userUnauthorized.error'
 
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(
     private jwtService: JwtService,
+    private userRepository: UserRepository,
     private reflector: Reflector,
   ) {}
 
@@ -31,7 +34,7 @@ export class AuthGuard implements CanActivate {
       const payload = await this.jwtService.verifyAsync(token, {
         secret: process.env.JWT_SECRET,
       })
-      request.user = payload
+      request.loggedUser = await this.userRepository.findById(payload.id)
     } catch {
       throw new UserUnauthorizedError()
     }
