@@ -27,7 +27,7 @@ model User {
 
 model Company {
   id             String      @id @default(uuid())
-  name           String
+  name           String      @unique
   logoUrl        String?
   primaryColor   String?
   secondaryColor String?
