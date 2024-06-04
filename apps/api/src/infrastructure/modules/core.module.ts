@@ -22,6 +22,7 @@ import { PrismaLeadRepository } from '../repositories/lead/prisma.repository'
 import { PrismaUserRepository } from '../repositories/user/prisma.repository'
 import { OpenAiService } from '../services/openai.service'
 import { PrismaService } from '../services/prisma.service'
+import { SendgridService } from '../services/sendgrid.service'
 import { AuthModule } from './auth.module'
 
 const USE_CASES = [GetLeadDetails, CreateGroup, GetGroupLeads, CreateCampaign, EditCampaignMessage]
@@ -32,6 +33,7 @@ const USE_CASES = [GetLeadDetails, CreateGroup, GetGroupLeads, CreateCampaign, E
   providers: [
     PrismaService,
     OpenAiService,
+    SendgridService,
     JwtService,
     {
       provide: APP_GUARD,
