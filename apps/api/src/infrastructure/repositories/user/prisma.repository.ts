@@ -15,11 +15,23 @@ export class PrismaUserRepository implements UserRepository {
       where: {
         id,
       },
+      include: {
+        company: {
+          include: {
+            onboard: true,
+          },
+        },
+      },
     })
-    if (!prismaUser) {
+    if (!prismaUser || !prismaUser.company.onboard) {
       return null
     }
-    return mapPrismaUserToDomain(prismaUser)
+    return mapPrismaUserToDomain(prismaUser, {
+      prismaCompany: {
+        ...prismaUser.company,
+        onboard: prismaUser.company.onboard,
+      },
+    })
   }
 
   async findByEmail(email: string): Promise<User | null> {

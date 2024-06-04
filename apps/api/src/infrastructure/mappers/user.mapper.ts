@@ -1,8 +1,13 @@
-import { Company as PrismaCompany, User as PrismaUser } from '@prisma/client'
+import { Company as PrismaCompany, CompanyOnboard as PrismaOnboard, User as PrismaUser } from '@prisma/client'
 
 import { User } from '@/domain/user'
 
-export const mapPrismaUserToDomain = (prismaUser: PrismaUser, prismaCompany?: PrismaCompany) =>
+export const mapPrismaUserToDomain = (
+  prismaUser: PrismaUser,
+  extra?: {
+    prismaCompany?: PrismaCompany & { onboard: PrismaOnboard }
+  },
+) =>
   ({
     id: prismaUser.id,
     email: prismaUser.email,
@@ -10,14 +15,21 @@ export const mapPrismaUserToDomain = (prismaUser: PrismaUser, prismaCompany?: Pr
     lastName: prismaUser.lastName,
     password: prismaUser.password,
     avatarUrl: prismaUser.avatarUrl || undefined,
-    company: prismaCompany
+    company: extra?.prismaCompany
       ? {
-          id: prismaCompany.id,
-          name: prismaCompany.name,
-          logoUrl: prismaCompany.logoUrl || undefined,
-          size: prismaCompany.size,
-          industry: prismaCompany.industry,
-          type: prismaCompany.type,
+          id: extra.prismaCompany.id,
+          name: extra.prismaCompany.name,
+          logoUrl: extra.prismaCompany.logoUrl || undefined,
+          size: extra.prismaCompany.size,
+          industry: extra.prismaCompany.industry,
+          type: extra.prismaCompany.type,
+          onboardData: {
+            salesSpeechContext: extra.prismaCompany.onboard.salesSpeechContext,
+            conversionRate: extra.prismaCompany.onboard.conversionRate,
+            targetIndustry: extra.prismaCompany.onboard.targetIndustry,
+            calendlyUrl: extra.prismaCompany.onboard.calendlyUrl || '',
+            mediumTicketPrice: extra.prismaCompany.onboard.mediumTicketPrice,
+          },
         }
       : undefined,
   }) satisfies User
