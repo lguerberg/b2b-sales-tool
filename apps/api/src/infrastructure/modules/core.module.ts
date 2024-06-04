@@ -9,8 +9,10 @@ import { UserRepository } from '@/domain/user/repository'
 
 import { CreateCampaign } from '../../application/group/create-campaign.usecase'
 import { CreateGroup } from '../../application/group/create-group.usecase'
+import { EditCampaignMessage } from '../../application/group/edit-campaign-message'
 import { GetGroupLeads } from '../../application/group/get-group-leads.usecase'
 import { GetLeadDetails } from '../../application/lead/get-lead-details.usecase'
+import { CampaignController } from '../controllers/campaign.controller'
 import { GroupController } from '../controllers/group.controller'
 import { LeadController } from '../controllers/lead.controller'
 import { AuthGuard } from '../guards/auth.guard'
@@ -21,11 +23,11 @@ import { PrismaUserRepository } from '../repositories/user/prisma.repository'
 import { PrismaService } from '../services/prisma.service'
 import { AuthModule } from './auth.module'
 
-const USE_CASES = [GetLeadDetails, CreateGroup, GetGroupLeads, CreateCampaign]
+const USE_CASES = [GetLeadDetails, CreateGroup, GetGroupLeads, CreateCampaign, EditCampaignMessage]
 
 @Module({
   imports: [AuthModule],
-  controllers: [LeadController, GroupController],
+  controllers: [LeadController, GroupController, CampaignController],
   providers: [
     PrismaService,
     JwtService,

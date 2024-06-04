@@ -11,6 +11,20 @@ import { PrismaService } from '../../services/prisma.service'
 export class PrismaCampaignRepository implements CampaignRepository {
   constructor(private prisma: PrismaService) {}
 
+  async findById(id: string) {
+    const prismaCampaign = await this.prisma.campaign.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        group: true,
+      },
+    })
+    if (!prismaCampaign) {
+      return null
+    }
+    return mapPrismaCampaignToDomain(prismaCampaign)
+  }
   async create(
     leads: LeadWithMessage[],
     emailData: CampaignEmailData,
@@ -39,5 +53,17 @@ export class PrismaCampaignRepository implements CampaignRepository {
       },
     })
     return mapPrismaCampaignToDomain(prismaCampaign)
+  }
+
+  async editMessage(campaignId: string, leadId: string, message: string): Promise<void> {
+    await this.prisma.campaignEmail.updateMany({
+      where: {
+        campaignId,
+        leadId,
+      },
+      data: {
+        content: message,
+      },
+    })
   }
 }
