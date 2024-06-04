@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 
-import { CampaignEmailData } from '@/domain/campaign'
+import { Campaign, CampaignEmailData } from '@/domain/campaign'
 import { CampaignRepository } from '@/domain/campaign/repository'
 import { LeadWithMessage } from '@/domain/lead'
 
@@ -10,6 +10,25 @@ import { PrismaService } from '../../services/prisma.service'
 @Injectable()
 export class PrismaCampaignRepository implements CampaignRepository {
   constructor(private prisma: PrismaService) {}
+
+  async findWithEmailsById(id: string): Promise<Campaign | null> {
+    const prismaCampaign = await this.prisma.campaign.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        emails: true,
+        group: true,
+      },
+    })
+    if (!prismaCampaign) {
+      return null
+    }
+    return mapPrismaCampaignToDomain(prismaCampaign, {
+      emails: prismaCampaign.emails,
+      group: prismaCampaign.group,
+    })
+  }
 
   async findById(id: string) {
     const prismaCampaign = await this.prisma.campaign.findUnique({
@@ -23,8 +42,11 @@ export class PrismaCampaignRepository implements CampaignRepository {
     if (!prismaCampaign) {
       return null
     }
-    return mapPrismaCampaignToDomain(prismaCampaign)
+    return mapPrismaCampaignToDomain(prismaCampaign, {
+      group: prismaCampaign.group,
+    })
   }
+
   async create(
     leads: LeadWithMessage[],
     emailData: CampaignEmailData,
@@ -52,7 +74,9 @@ export class PrismaCampaignRepository implements CampaignRepository {
         group: true,
       },
     })
-    return mapPrismaCampaignToDomain(prismaCampaign)
+    return mapPrismaCampaignToDomain(prismaCampaign, {
+      group: prismaCampaign.group,
+    })
   }
 
   async editMessage(campaignId: string, leadId: string, message: string): Promise<void> {

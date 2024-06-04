@@ -10,6 +10,7 @@ import { UserRepository } from '@/domain/user/repository'
 import { CreateCampaign } from '../../application/group/create-campaign.usecase'
 import { CreateGroup } from '../../application/group/create-group.usecase'
 import { EditCampaignMessage } from '../../application/group/edit-campaign-message'
+import { GetCampaignDetails } from '../../application/group/get-campaign-details.usecase'
 import { GetGroupLeads } from '../../application/group/get-group-leads.usecase'
 import { GetLeadDetails } from '../../application/lead/get-lead-details.usecase'
 import { CampaignController } from '../controllers/campaign.controller'
@@ -25,7 +26,7 @@ import { PrismaService } from '../services/prisma.service'
 import { SendgridService } from '../services/sendgrid.service'
 import { AuthModule } from './auth.module'
 
-const USE_CASES = [GetLeadDetails, CreateGroup, GetGroupLeads, CreateCampaign, EditCampaignMessage]
+const USE_CASES = [GetLeadDetails, CreateGroup, GetGroupLeads, CreateCampaign, EditCampaignMessage, GetCampaignDetails]
 
 @Module({
   imports: [AuthModule],

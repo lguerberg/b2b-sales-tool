@@ -20,7 +20,7 @@ export class GroupController {
   ) {}
 
   @Post('')
-  // @UsePipes(new ValidationPipe(createGroupBody))
+  @UsePipes(new ValidationPipe(createGroupBody))
   async create(@Body() body: CreateGroupBody, @LoggedUser() user: User) {
     const group = await this.createGroup.execute(user.id, body.leadsIds, {
       name: body.name,
@@ -34,7 +34,7 @@ export class GroupController {
     return this.getGroupLeads.execute(user, groupId)
   }
 
-  // @UsePipes(new ValidationPipe(createCampaignBody))
+  @UsePipes(new ValidationPipe(createCampaignBody))
   @Post(':groupId/campaign')
   async createCampaign(@Body() body: CreateCampaignBody, @Param('groupId') groupId: string, @LoggedUser() user: User) {
     const campaign = await this.createGroupCampaign.execute(user, body.subject, groupId, body.name, body.description)
