@@ -12,7 +12,7 @@ export class CampaignController {
   constructor(private editCampaignMessage: EditCampaignMessage) {}
 
   @Put(':campaignId/leads/:leadId/message')
-  @UsePipes(new ValidationPipe(editCampaignMessageBody))
+  //   @UsePipes(new ValidationPipe(editCampaignMessageBody))
   async editMessage(
     @Param('campaignId') campaignId: string,
     @Param('leadId') leadId: string,
@@ -20,5 +20,6 @@ export class CampaignController {
     @LoggedUser() user: User,
   ) {
     await this.editCampaignMessage.execute(user, campaignId, leadId, body.message)
+    return { updated: true }
   }
 }
