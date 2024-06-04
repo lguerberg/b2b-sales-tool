@@ -20,6 +20,7 @@ import { PrismaCampaignRepository } from '../repositories/campaign/prisma.reposi
 import { PrismaGroupRepository } from '../repositories/group/prisma.repository'
 import { PrismaLeadRepository } from '../repositories/lead/prisma.repository'
 import { PrismaUserRepository } from '../repositories/user/prisma.repository'
+import { OpenAiService } from '../services/openai.service'
 import { PrismaService } from '../services/prisma.service'
 import { AuthModule } from './auth.module'
 
@@ -30,6 +31,7 @@ const USE_CASES = [GetLeadDetails, CreateGroup, GetGroupLeads, CreateCampaign, E
   controllers: [LeadController, GroupController, CampaignController],
   providers: [
     PrismaService,
+    OpenAiService,
     JwtService,
     {
       provide: APP_GUARD,

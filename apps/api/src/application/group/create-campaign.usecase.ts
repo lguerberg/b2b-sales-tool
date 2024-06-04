@@ -6,6 +6,7 @@ import { CampaignRepository } from '@/domain/campaign/repository'
 import { LeadWithMessage } from '@/domain/lead'
 import { User } from '@/domain/user'
 
+import { OpenAiService } from '../../infrastructure/services/openai.service'
 import { GetGroupLeads } from './get-group-leads.usecase'
 
 @Injectable()
@@ -13,6 +14,7 @@ export class CreateCampaign {
   constructor(
     private campaignRepository: CampaignRepository,
     private getGroupLeads: GetGroupLeads,
+    private openAiService: OpenAiService,
   ) {}
 
   async execute(
@@ -28,7 +30,7 @@ export class CreateCampaign {
       async lead =>
         ({
           ...lead,
-          message: 'This should be integrated with OpenAI',
+          message: await this.openAiService.generateLeadMessage(lead, user.company?.onboardData?.salesSpeechContext),
         }) satisfies LeadWithMessage,
       10,
     )) as LeadWithMessage[]
@@ -37,7 +39,7 @@ export class CreateCampaign {
       leadsWithMessage,
       {
         ...emailData,
-        calendlyUrl: 'https://google.com',
+        calendlyUrl: user.company?.onboardData?.calendlyUrl || '',
       },
       groupId,
       name,

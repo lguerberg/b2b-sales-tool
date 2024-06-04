@@ -8,7 +8,7 @@ import { GetGroupLeads } from '../../application/group/get-group-leads.usecase'
 import { LoggedUser } from '../decorators/logged-user.decorator'
 import { mapToGroupResponse } from '../mappers/group.mapper'
 import { ValidationPipe } from '../pipes/validation.pipe'
-import { CreateCampaignBody, createCampaignBody } from '../schemas/group/create-group-campaign'
+import { CreateCampaignBody, createCampaignBody } from '../schemas/group/create-group-campaign.schema'
 import { CreateGroupBody, createGroupBody } from '../schemas/group/create-group.schema'
 
 @Controller('groups')
