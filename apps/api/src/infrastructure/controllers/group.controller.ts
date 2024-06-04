@@ -19,8 +19,8 @@ export class GroupController {
     private createGroupCampaign: CreateCampaign,
   ) {}
 
-  @Post()
-  @UsePipes(new ValidationPipe(createGroupBody))
+  @Post('')
+  // @UsePipes(new ValidationPipe(createGroupBody))
   async create(@Body() body: CreateGroupBody, @LoggedUser() user: User) {
     const group = await this.createGroup.execute(user.id, body.leadsIds, {
       name: body.name,
@@ -34,19 +34,10 @@ export class GroupController {
     return this.getGroupLeads.execute(user, groupId)
   }
 
+  // @UsePipes(new ValidationPipe(createCampaignBody))
   @Post(':groupId/campaign')
-  @UsePipes(new ValidationPipe(createCampaignBody))
   async createCampaign(@Body() body: CreateCampaignBody, @Param('groupId') groupId: string, @LoggedUser() user: User) {
-    const campaign = await this.createGroupCampaign.execute(
-      user,
-      {
-        subject: body.subject,
-        body: body.body,
-      },
-      groupId,
-      body.name,
-      body.description,
-    )
+    const campaign = await this.createGroupCampaign.execute(user, body.subject, groupId, body.name, body.description)
     return {
       created: campaign.id,
     }

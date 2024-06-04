@@ -42,7 +42,7 @@ export class PrismaCampaignRepository implements CampaignRepository {
             data: leads.map(lead => ({
               leadId: lead.id,
               subject: emailData.subject,
-              content: emailData.body,
+              content: lead.message,
               calendlyUrl: emailData.calendlyUrl,
             })),
           },

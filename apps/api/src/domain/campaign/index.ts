@@ -30,6 +30,5 @@ export interface CampaignEmail {
 
 export interface CampaignEmailData {
   subject: string
-  body: string
   calendlyUrl: string
 }

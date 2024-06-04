@@ -17,13 +17,7 @@ export class CreateCampaign {
     private openAiService: OpenAiService,
   ) {}
 
-  async execute(
-    user: User,
-    emailData: Omit<CampaignEmailData, 'calendlyUrl'>,
-    groupId: string,
-    name: string,
-    description: string,
-  ) {
+  async execute(user: User, subject: string, groupId: string, name: string, description: string) {
     const leads = await this.getGroupLeads.execute(user, groupId)
     const leadsWithMessage = (await batchedPromiseAll(
       leads,
@@ -38,7 +32,7 @@ export class CreateCampaign {
     return this.campaignRepository.create(
       leadsWithMessage,
       {
-        ...emailData,
+        subject,
         calendlyUrl: user.company?.onboardData?.calendlyUrl || '',
       },
       groupId,
