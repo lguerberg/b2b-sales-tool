@@ -16,10 +16,18 @@ export class PrismaLeadRepository implements LeadRepository {
         groupId,
       },
       include: {
-        lead: true,
+        lead: {
+          include: {
+            currentCompany: true,
+          },
+        },
       },
     })
-    return prismaLeads.map(groupLead => mapPrismaLeadToDomain(groupLead.lead))
+    return prismaLeads.map(groupLead =>
+      mapPrismaLeadToDomain(groupLead.lead, {
+        currentCompany: groupLead.lead.currentCompany,
+      }),
+    )
   }
 
   async findManyByIds(leadIds: string[]): Promise<Lead[]> {
@@ -38,10 +46,15 @@ export class PrismaLeadRepository implements LeadRepository {
       where: {
         id,
       },
+      include: {
+        currentCompany: true,
+      },
     })
     if (!prismaLead) {
       return null
     }
-    return mapPrismaLeadToDomain(prismaLead)
+    return mapPrismaLeadToDomain(prismaLead, {
+      currentCompany: prismaLead.currentCompany,
+    })
   }
 }
