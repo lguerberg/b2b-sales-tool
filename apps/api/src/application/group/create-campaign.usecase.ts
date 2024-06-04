@@ -24,7 +24,7 @@ export class CreateCampaign {
       async lead =>
         ({
           ...lead,
-          message: await this.openAiService.generateLeadMessage(lead, user.company?.onboardData?.salesSpeechContext),
+          message: await this.openAiService.generateLeadMessage(lead, user, subject),
         }) satisfies LeadWithMessage,
       10,
     )) as LeadWithMessage[]
