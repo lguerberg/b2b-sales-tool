@@ -30,11 +30,12 @@ async function main() {
       },
       onboard: {
         create: {
-          conversionRate: 1,
+          conversionRate: 4,
           mediumTicketPrice: 2670,
           salesSpeechContext:
             'You are a the BDR of Nuvia.co, a company that provides a SaaS product for sales teams. Your SaaS includes prospecting, enrichment, outreach, and CRM features (most of the pains that address fintechs)',
           calendlyUrl: 'https://calendly.com/leo-guerberg/sales-demo',
+          targetIndustry: ['Fintech', 'Healthcare', 'SaaS', 'Banking'],
         },
       },
     },
