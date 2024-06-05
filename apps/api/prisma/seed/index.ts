@@ -44,16 +44,6 @@ async function main() {
     },
   })
 
-  // Seed locations
-  const locations = await prisma.location.createManyAndReturn({
-    data: faker.helpers.multiple(createLocation, {
-      count: 1000,
-    }),
-    select: {
-      id: true,
-    },
-  })
-
   // Seed users
   await Promise.all(
     (await UsersToSeed(demoCompany.id)).map(async user =>
@@ -66,6 +56,16 @@ async function main() {
       }),
     ),
   )
+
+  // Seed locations
+  const locations = await prisma.location.createManyAndReturn({
+    data: faker.helpers.multiple(createLocation, {
+      count: 1000,
+    }),
+    select: {
+      id: true,
+    },
+  })
 
   // Seed companies
   const companies = await prisma.company.createManyAndReturn({

@@ -18,7 +18,7 @@ export const createLocation = () => ({
 })
 
 export const createCompany = (hqLocationId: string) => ({
-  name: `${faker.datatype.number({ min: 1, max: 100 })}_${faker.company.name()}`,
+  name: `${faker.datatype.number({ min: 1, max: 100000 })}_${faker.company.name()}`,
   primaryColor: faker.color.rgb(),
   secondaryColor: faker.color.rgb(),
   logoUrl: faker.image.business(),
