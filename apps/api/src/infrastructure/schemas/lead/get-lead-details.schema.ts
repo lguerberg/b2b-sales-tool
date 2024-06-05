@@ -6,6 +6,7 @@ export const getLeadDetailsResponse = z.object({
   lastName: z.string(),
   email: z.string(),
   phone: z.string().optional(),
+  language: z.union([z.literal('en'), z.literal('es'), z.literal('fr'), z.literal('it')]),
   currentPosition: z.object({
     company: z.object({
       name: z.string(),

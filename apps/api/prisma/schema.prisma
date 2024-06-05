@@ -185,6 +185,7 @@ model Lead {
   jobDescription         String
   jobTitle               String
   isDecisionMaker        Boolean
+  language               String
 
   currentCompany   Company @relation(fields: [currentCompanyId], references: [id], name: "currentCompany")
   currentCompanyId String

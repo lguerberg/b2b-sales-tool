@@ -1,5 +1,7 @@
 import { Seniority } from '@prisma/client'
 
+export type LeadLanguage = 'en' | 'es' | 'fr' | 'it'
+
 export interface Lead {
   id: string
   firstName: string
@@ -7,6 +9,7 @@ export interface Lead {
   email: string
   phone?: string
   enrichedSummary: string
+  language: LeadLanguage
   currentPosition: {
     company: {
       name: string

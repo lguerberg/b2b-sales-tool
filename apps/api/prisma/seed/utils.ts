@@ -18,9 +18,10 @@ export const createLocation = () => ({
 })
 
 export const createCompany = (hqLocationId: string) => ({
-  name: faker.company.name(),
+  name: `${faker.datatype.number({ min: 1, max: 100 })}_${faker.company.name()}`,
   primaryColor: faker.color.rgb(),
   secondaryColor: faker.color.rgb(),
+  logoUrl: faker.image.business(),
   size: faker.helpers.enumValue(CompanySize),
   industry: faker.commerce.department(),
   type: faker.helpers.arrayElement([
@@ -51,6 +52,7 @@ export const createLead = (currentCompanyId: string) => ({
   jobTitle: faker.name.jobTitle(),
   jobDescription: faker.name.jobDescriptor(),
   isDecisionMaker: faker.datatype.boolean(),
+  language: faker.helpers.arrayElement(['en', 'es', 'fr', 'it']),
 })
 
 export const UsersToSeed = async (companyId: string) => [
