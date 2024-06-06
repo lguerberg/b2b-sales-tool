@@ -17,7 +17,7 @@ export default function Prospect() {
       <div className="mb-5">
         <SectionTitle>Search for leads and save them in groups</SectionTitle>
       </div>
-      <FormWrapper form={form} onSubmit={onSubmit}>
+      <FormWrapper form={form} onSubmit={onSubmit} buttonText="Search">
         <SectionSubtitle>By person</SectionSubtitle>
         <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-3 mt-3 mb-5">
           <FormField
@@ -57,7 +57,7 @@ export default function Prospect() {
           />
         </div>
         <SectionSubtitle>By company</SectionSubtitle>
-        <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+        <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-3 my-3">
           <FormField
             control={form.control}
             name="industry"

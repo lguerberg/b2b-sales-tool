@@ -3,12 +3,12 @@ import { Form } from '@app/components/ui/form'
 
 import { FormWrapperProps } from './types'
 
-export default function FormWrapper({ children, form, onSubmit }: FormWrapperProps) {
+export default function FormWrapper({ buttonText, children, form, onSubmit }: FormWrapperProps) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>{children}</form>
-      <Button className="mt-5" type="submit">
-        Submit
+      <Button className="w-full mt-5" type="submit">
+        {buttonText || 'Submit'}
       </Button>
     </Form>
   )
