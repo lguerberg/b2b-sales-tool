@@ -1,6 +1,6 @@
 export type SelectInputProps = {
   options?: {
     label: string
-    value: string
+    value: string | number | boolean
   }[]
 }
