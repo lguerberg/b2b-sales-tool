@@ -1,7 +1,7 @@
 export default function Groups() {
   return (
-    <div>
-      <h1>Groups</h1>
+    <div className="w-full h-screen flex justify-center items-center">
+      <b>Groups</b>
     </div>
   )
 }

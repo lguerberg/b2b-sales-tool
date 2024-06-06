@@ -1,7 +1,7 @@
 export default function Profile() {
   return (
-    <div>
-      <h1>Profile</h1>
+    <div className="w-full h-screen flex justify-center items-center">
+      <b>Profile</b>
     </div>
   )
 }

@@ -1,7 +1,7 @@
 export default function Campaigns() {
   return (
-    <div>
-      <h1>Campaigns</h1>
+    <div className="w-full h-screen flex justify-center items-center">
+      <b>Campaigns</b>
     </div>
   )
 }

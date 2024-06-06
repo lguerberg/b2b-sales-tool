@@ -1,7 +1,7 @@
-export default function Integrations() {
+export default function Prospect() {
   return (
     <div className="w-full h-screen flex justify-center items-center">
-      <b>Integrations</b>
+      <b>Prospect</b>
     </div>
   )
 }
