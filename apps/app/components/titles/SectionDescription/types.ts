@@ -1,4 +1,4 @@
-export type SectionTitleProps = {
+export type SectionDescriptionProps = {
   children: React.ReactNode
   className?: string
 }
