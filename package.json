@@ -7,6 +7,7 @@
     "all:dev": "pnpm run --parallel dev",
     "api:dev": "docker-compose -f docker/docker-compose.yml up -d",
     "api:down": "docker-compose -f docker/docker-compose.yml down",
+    "app:dev": "pnpm -C apps/app run dev",
     "format": "pnpm run --parallel format",
     "lint:fix": "pnpm run --parallel lint:fix",
     "dep:upgrade": "manypkg upgrade"
