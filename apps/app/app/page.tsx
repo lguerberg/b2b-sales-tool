@@ -31,7 +31,7 @@ export default function Dashboard() {
       </div>
 
       <div className="flex flex-col">
-        <SectionTitle>Check this potential data about your potential leads</SectionTitle>
+        <SectionTitle>Check this data about your potential leads</SectionTitle>
       </div>
     </div>
   )
