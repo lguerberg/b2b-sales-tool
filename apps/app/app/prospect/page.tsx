@@ -2,6 +2,7 @@
 
 import FormInput from '@app/components/form/FormInput'
 import FormWrapper from '@app/components/form/FormWrapper'
+import SectionDescription from '@app/components/titles/SectionDescription'
 import SectionSubtitle from '@app/components/titles/SectionSubtitle'
 import SectionTitle from '@app/components/titles/SectionTitle'
 import { FormField } from '@app/components/ui/form'
@@ -15,7 +16,8 @@ export default function Prospect() {
   return (
     <div className="w-full">
       <div className="mb-5">
-        <SectionTitle>Search for leads and save them in groups</SectionTitle>
+        <SectionTitle>Prospect</SectionTitle>
+        <SectionDescription> Search for leads and save them in groups</SectionDescription>
       </div>
       <FormWrapper form={form} onSubmit={onSubmit} buttonText="Search">
         <SectionSubtitle>By person</SectionSubtitle>
@@ -84,8 +86,18 @@ export default function Prospect() {
             render={({ field }) => (
               <FormInput
                 label="Only decision makers"
+                type="select"
                 description="Only show leads that are decision makers"
-                placeholder="Yes"
+                options={[
+                  {
+                    value: true,
+                    label: 'Yes',
+                  },
+                  {
+                    value: false,
+                    label: 'No',
+                  },
+                ]}
                 {...field}
               />
             )}
