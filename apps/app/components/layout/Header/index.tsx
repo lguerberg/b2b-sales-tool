@@ -1,6 +1,5 @@
 'use client'
 
-import { Button } from '@app/components/ui/button'
 import { isPrivatePath } from '@app/lib/utils'
 import { usePathname } from 'next/navigation'
 

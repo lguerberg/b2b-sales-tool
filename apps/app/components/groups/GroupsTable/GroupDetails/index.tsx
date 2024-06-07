@@ -1,4 +1,4 @@
-import { Button } from '@app/components/ui/button'
+import TextButton from '@app/components/buttons/TextButton'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@app/components/ui/dialog'
 import { ScrollArea } from '@app/components/ui/scroll-area'
 
@@ -68,9 +68,7 @@ export default function GroupDetails({ open, onClose }: GroupDetailsProps) {
           ))}
         </ScrollArea>
         {/* Redirect to campaign creation page */}
-        <Button onClick={() => {}} className="mt-5">
-          Create campaign
-        </Button>
+        <TextButton className="mt-5">Create campaign</TextButton>
       </DialogContent>
     </Dialog>
   )

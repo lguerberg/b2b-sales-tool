@@ -1,4 +1,4 @@
-import { Button } from '@app/components/ui/button'
+import TextButton from '@app/components/buttons/TextButton'
 import { Form } from '@app/components/ui/form'
 
 import { FormWrapperProps } from './types'
@@ -8,9 +8,9 @@ export default function FormWrapper({ buttonText, children, form, onSubmit }: Fo
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>{children}</form>
       {buttonText && (
-        <Button className="w-full mt-5" type="submit">
+        <TextButton className="w-full mt-5" type="submit">
           {buttonText || 'Submit'}
-        </Button>
+        </TextButton>
       )}
     </Form>
   )

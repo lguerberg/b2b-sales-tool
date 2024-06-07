@@ -1,7 +1,7 @@
+import TextButton from '@app/components/buttons/TextButton'
 import GroupsTable from '@app/components/groups/GroupsTable'
 import SectionDescription from '@app/components/titles/SectionDescription'
 import SectionTitle from '@app/components/titles/SectionTitle'
-import { Button } from '@app/components/ui/button'
 import { ROUTES } from '@app/lib/constants'
 import Link from 'next/link'
 
@@ -14,7 +14,7 @@ export default function Groups() {
           <SectionDescription>Manage your group of leads and create campaigns</SectionDescription>
         </div>
         <Link href={ROUTES.PROSPECT.path}>
-          <Button>Prospect leads</Button>
+          <TextButton>Prospect leads</TextButton>
         </Link>
       </div>
       <GroupsTable />
