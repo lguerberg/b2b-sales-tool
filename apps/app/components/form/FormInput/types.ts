@@ -4,7 +4,7 @@ export type FormInputProps = {
   label: string
   placeholder?: string
   description?: string
-  type?: 'text' | 'select' | 'checkbox'
+  type?: 'text' | 'select' | 'checkbox' | 'password'
   value: any
   onChange: (value: any) => void
   options?: SelectInputProps['options']

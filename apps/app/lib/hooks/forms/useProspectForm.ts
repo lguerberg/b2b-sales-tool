@@ -3,7 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 
-import { ProspectSchema, prospectSchema } from '../schemas/prospect'
+import { ProspectSchema, prospectSchema } from '../../schemas/prospect'
 
 export default function useProspectForm() {
   const form = useForm<ProspectSchema>({

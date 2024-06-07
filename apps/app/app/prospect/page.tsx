@@ -6,7 +6,7 @@ import SectionDescription from '@app/components/titles/SectionDescription'
 import SectionSubtitle from '@app/components/titles/SectionSubtitle'
 import SectionTitle from '@app/components/titles/SectionTitle'
 import { FormField } from '@app/components/ui/form'
-import useProspectForm from '@app/lib/hooks/useProspectForm'
+import useProspectForm from '@app/lib/hooks/forms/useProspectForm'
 
 import { SENIORITIES } from './constants'
 

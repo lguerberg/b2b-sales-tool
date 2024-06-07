@@ -7,9 +7,11 @@ export default function FormWrapper({ buttonText, children, form, onSubmit }: Fo
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>{children}</form>
-      <Button className="w-full mt-5" type="submit">
-        {buttonText || 'Submit'}
-      </Button>
+      {buttonText && (
+        <Button className="w-full mt-5" type="submit">
+          {buttonText || 'Submit'}
+        </Button>
+      )}
     </Form>
   )
 }

@@ -1,4 +1,5 @@
 import { CheckboxInput } from '@app/components/inputs/CheckboxInput'
+import PasswordInput from '@app/components/inputs/PasswordInput'
 import { SelectInput } from '@app/components/inputs/SelectInput'
 import { FormControl, FormDescription, FormItem, FormLabel, FormMessage } from '@app/components/ui/form'
 import { Input } from '@app/components/ui/input'
@@ -21,7 +22,8 @@ export default function FormInput({
       {description && <FormDescription>{description}</FormDescription>}
       <FormControl>
         <>
-          {type === 'text' && <Input placeholder={placeholder} {...field} />}
+          {type === 'text' && <Input onChange={onChange} placeholder={placeholder} {...field} />}
+          {type === 'password' && <PasswordInput onChange={onChange} {...field} />}
           {type === 'select' && <SelectInput options={options} />}
           {type === 'checkbox' && <CheckboxInput value={value} onChange={onChange} />}
         </>
