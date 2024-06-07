@@ -1,4 +1,6 @@
 import LayoutHeader from '@app/components/layout/Header'
+import { QueryClientProvider } from '@app/components/providers/QueryClientProvider'
+import { Toaster } from '@app/components/ui/toaster'
 import { cn } from '@app/lib/utils'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
@@ -18,11 +20,14 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
-      <body className={cn('min-h-screen bg-background font-sans antialiased', inter.variable)}>
-        <LayoutHeader />
-        <div className="p-5">{children}</div>
-      </body>
-    </html>
+    <QueryClientProvider>
+      <html lang="en">
+        <body className={cn('min-h-screen bg-background font-sans antialiased', inter.variable)}>
+          <LayoutHeader />
+          <div className="p-5">{children}</div>
+          <Toaster />
+        </body>
+      </html>
+    </QueryClientProvider>
   )
 }
