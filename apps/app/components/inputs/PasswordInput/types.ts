@@ -1,3 +1,5 @@
+import { ChangeEvent } from 'react'
+
 export type PasswordInputProps = {
-  onChange: (value: string) => void
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void
 }
