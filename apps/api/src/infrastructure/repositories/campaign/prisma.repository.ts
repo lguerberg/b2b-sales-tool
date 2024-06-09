@@ -7,6 +7,7 @@ import { Lead } from '@/domain/lead'
 
 import { mapPrismaCampaignToDomain } from '../../mappers/campaign.mapper'
 import { PrismaService } from '../../services/prisma.service'
+import { hasMoreRecords } from '../../utils/paginate.utils'
 
 @Injectable()
 export class PrismaCampaignRepository implements CampaignRepository {
@@ -96,5 +97,35 @@ export class PrismaCampaignRepository implements CampaignRepository {
         status,
       },
     })
+  }
+
+  async findByUserId(userId: string, limit: number, offset: number) {
+    const where = {
+      group: {
+        userCreatedId: userId,
+      },
+    }
+    const [prismaCampaigns, total] = await Promise.all([
+      this.prisma.campaign.findMany({
+        where,
+        include: {
+          group: true,
+        },
+        take: limit,
+        skip: offset,
+      }),
+      this.prisma.campaign.count({
+        where,
+      }),
+    ])
+    return {
+      total,
+      data: prismaCampaigns.map(prismaCampaign =>
+        mapPrismaCampaignToDomain(prismaCampaign, {
+          group: prismaCampaign.group,
+        }),
+      ),
+      hasMore: hasMoreRecords(total, limit, offset),
+    }
   }
 }

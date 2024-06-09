@@ -12,6 +12,8 @@ import { CreateGroup } from '../../application/group/create-group.usecase'
 import { EditCampaignMessage } from '../../application/group/edit-campaign-message'
 import { GetCampaignDetails } from '../../application/group/get-campaign-details.usecase'
 import { GetGroupLeads } from '../../application/group/get-group-leads.usecase'
+import { GetUserCampaigns } from '../../application/group/get-user-campaigns.usecase'
+import { GetUserGroups } from '../../application/group/get-user-groups.usecase'
 import { GetLeadDetails } from '../../application/lead/get-lead-details.usecase'
 import { CampaignController } from '../controllers/campaign.controller'
 import { GroupController } from '../controllers/group.controller'
@@ -26,7 +28,16 @@ import { PrismaService } from '../services/prisma.service'
 import { SendgridService } from '../services/sendgrid.service'
 import { AuthModule } from './auth.module'
 
-const USE_CASES = [GetLeadDetails, CreateGroup, GetGroupLeads, CreateCampaign, EditCampaignMessage, GetCampaignDetails]
+const USE_CASES = [
+  GetLeadDetails,
+  CreateGroup,
+  GetGroupLeads,
+  CreateCampaign,
+  EditCampaignMessage,
+  GetCampaignDetails,
+  GetUserCampaigns,
+  GetUserGroups,
+]
 
 @Module({
   imports: [AuthModule],

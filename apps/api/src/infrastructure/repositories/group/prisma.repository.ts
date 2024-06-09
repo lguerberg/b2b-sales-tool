@@ -5,6 +5,7 @@ import { GroupRepository } from '@/domain/group/repository'
 
 import { mapPrismaGroupToDomain } from '../../mappers/group.mapper'
 import { PrismaService } from '../../services/prisma.service'
+import { hasMoreRecords } from '../../utils/paginate.utils'
 
 @Injectable()
 export class PrismaGroupRepository implements GroupRepository {
@@ -20,6 +21,28 @@ export class PrismaGroupRepository implements GroupRepository {
       return null
     }
     return mapPrismaGroupToDomain(prismaGroup)
+  }
+
+  async findByUserId(id: string, limit: number, offset: number) {
+    const [prismaGroups, total] = await Promise.all([
+      this.prisma.group.findMany({
+        where: {
+          userCreatedId: id,
+        },
+        take: limit,
+        skip: offset,
+      }),
+      this.prisma.group.count({
+        where: {
+          userCreatedId: id,
+        },
+      }),
+    ])
+    return {
+      data: prismaGroups.map(mapPrismaGroupToDomain),
+      total,
+      hasMore: hasMoreRecords(total, limit, offset),
+    }
   }
 
   async create(creatorId: string, leadIds: string[], data: Partial<Group>): Promise<Group> {
