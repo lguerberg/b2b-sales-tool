@@ -1,13 +1,17 @@
+import { CampaingStatus } from '@prisma/client'
+
 import { Campaign, CampaignEmailData } from '.'
-import { LeadWithMessage } from '../lead'
+import { Lead } from '../lead'
 
 export abstract class CampaignRepository {
   abstract findById(id: string): Promise<Campaign | null>
 
+  abstract changeStatus(campaignId: string, status: CampaingStatus): Promise<void>
+
   abstract findWithEmailsById(id: string): Promise<Campaign | null>
 
   abstract create(
-    leads: LeadWithMessage[],
+    leads: Lead[],
     emailData: CampaignEmailData,
     groupId: string,
     name: string,

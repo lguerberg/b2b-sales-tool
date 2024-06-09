@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common'
+import { $Enums, CampaingStatus } from '@prisma/client'
 
 import { Campaign, CampaignEmailData } from '@/domain/campaign'
 import { CampaignRepository } from '@/domain/campaign/repository'
-import { LeadWithMessage } from '@/domain/lead'
+import { Lead } from '@/domain/lead'
 
 import { mapPrismaCampaignToDomain } from '../../mappers/campaign.mapper'
 import { PrismaService } from '../../services/prisma.service'
@@ -47,24 +48,19 @@ export class PrismaCampaignRepository implements CampaignRepository {
     })
   }
 
-  async create(
-    leads: LeadWithMessage[],
-    emailData: CampaignEmailData,
-    groupId: string,
-    name: string,
-    description: string,
-  ) {
+  async create(leads: Lead[], emailData: CampaignEmailData, groupId: string, name: string, description: string) {
     const prismaCampaign = await this.prisma.campaign.create({
       data: {
         name,
         description,
         groupId,
+        status: CampaingStatus.CREATING,
         emails: {
           createMany: {
             data: leads.map(lead => ({
               leadId: lead.id,
               subject: emailData.subject,
-              content: lead.message,
+              content: '',
               calendlyUrl: emailData.calendlyUrl,
             })),
           },
@@ -87,6 +83,17 @@ export class PrismaCampaignRepository implements CampaignRepository {
       },
       data: {
         content: message,
+      },
+    })
+  }
+
+  async changeStatus(campaignId: string, status: $Enums.CampaingStatus): Promise<void> {
+    await this.prisma.campaign.update({
+      where: {
+        id: campaignId,
+      },
+      data: {
+        status,
       },
     })
   }
