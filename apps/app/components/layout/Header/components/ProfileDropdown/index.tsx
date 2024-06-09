@@ -9,10 +9,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@app/components/ui/dropdown-menu'
-import { ROUTES } from '@app/lib/constants'
 import useLogout from '@app/lib/hooks/mutations/useLogout'
 import { CircleUser } from 'lucide-react'
-import Link from 'next/link'
 
 export default function ProfileDropdown() {
   const { mutate: logout } = useLogout()
@@ -29,9 +27,6 @@ export default function ProfileDropdown() {
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem className="cursor-pointer">
-            <Link href={ROUTES.PROFILE.path}>Settings</Link>
-          </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem className="cursor-pointer" onClick={() => logout()}>
             Logout
