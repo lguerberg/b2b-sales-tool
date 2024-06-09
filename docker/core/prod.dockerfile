@@ -34,9 +34,17 @@ RUN corepack enable
 
 # Install nestjs cli
 RUN pnpm add -g @nestjs/cli
+RUN pnpm add -g prisma
+
 
 # Copy source files
 COPY . /app
+
+# Generate prisma client
+RUN cd apps/api && pnpm prisma generate
+
+# Remove prisma seed
+RUN rm -rf apps/api/prisma/seed
 
 # Build the application (adjust according to your build command)
 RUN pnpm run --prefix apps/api build
