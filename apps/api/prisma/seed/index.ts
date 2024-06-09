@@ -1,7 +1,15 @@
 import { faker } from '@faker-js/faker'
 import { PrismaClient } from '@prisma/client'
+import { batchedPromiseAll } from 'batched-promise-all'
 
-import { UsersToSeed, createCompany, createLead, createLocation } from './utils'
+import {
+  UsersToSeed,
+  createCampaignEmail,
+  createCompany,
+  createGroupWithCampaigns,
+  createLead,
+  createLocation,
+} from './utils'
 
 const prisma = new PrismaClient()
 
@@ -45,7 +53,7 @@ async function main() {
   })
 
   // Seed users
-  await Promise.all(
+  const users = await Promise.all(
     (await UsersToSeed(demoCompany.id)).map(async user =>
       prisma.user.upsert({
         where: {
@@ -78,11 +86,42 @@ async function main() {
   })
 
   // Seed leads
-  await prisma.lead.createMany({
+  const leads = await prisma.lead.createManyAndReturn({
     data: faker.helpers.multiple(() => createLead(faker.helpers.arrayElement(companies).id), {
       count: 10000,
     }),
   })
+
+  // Seed groups with campaigns
+  for (let i = 0; i < 1000; i++) {
+    const group = await prisma.group.create({
+      data: createGroupWithCampaigns(
+        1,
+        faker.helpers.arrayElement(users).id,
+        faker.helpers
+          .arrayElements(
+            leads,
+            faker.number.int({
+              min: 3,
+              max: 250,
+            }),
+          )
+          .map(lead => lead.id),
+      ),
+      include: {
+        leads: {
+          include: {
+            lead: true,
+          },
+        },
+        campaings: true,
+      },
+    })
+
+    await prisma.campaignEmail.createMany({
+      data: group.campaings.map(c => group.leads.map(l => createCampaignEmail(c.id, l.lead.id))).flat(),
+    })
+  }
 }
 main()
   .then(async () => {

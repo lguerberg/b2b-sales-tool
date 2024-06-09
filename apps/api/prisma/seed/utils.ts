@@ -1,5 +1,5 @@
-import { faker } from '@faker-js/faker'
-import { CompanySize, Seniority } from '@prisma/client'
+import { de, faker } from '@faker-js/faker'
+import { CampaingStatus, CompanySize, Seniority } from '@prisma/client'
 
 import { hashPassword } from '../../src/infrastructure/utils/password.utils'
 
@@ -73,3 +73,44 @@ export const UsersToSeed = async (companyId: string) => [
     companyId,
   },
 ]
+
+export const createGroupWithCampaigns = (campaignsCount: number, userCreatedId: string, leadsIds: string[]) => {
+  const emailsSentCount = faker.datatype.number({ min: 1, max: leadsIds.length })
+  const emailsFailedCount = leadsIds.length - emailsSentCount
+  const emailsOpenedCount = faker.datatype.number({ min: 1, max: emailsSentCount })
+  const emailsClickedCount = faker.datatype.number({ min: 1, max: emailsOpenedCount })
+  const meetingsScheduledCount = faker.datatype.number({ min: 1, max: emailsClickedCount })
+
+  return {
+    name: faker.company.buzzAdjective(),
+    description: faker.company.catchPhrase(),
+    userCreatedId,
+    campaings: {
+      createMany: {
+        data: Array.from({ length: campaignsCount }).map(() => ({
+          name: faker.company.bsAdjective(),
+          description: faker.company.bsBuzz(),
+          status: CampaingStatus.SENT,
+          emailsSentCount,
+          emailsFailedCount,
+          emailsOpenedCount,
+          emailsClickedCount,
+          meetingsScheduledCount,
+        })),
+      },
+    },
+    leads: {
+      createMany: {
+        data: leadsIds.map(leadId => ({ leadId })),
+      },
+    },
+  }
+}
+
+export const createCampaignEmail = (campaignId: string, leadId: string) => ({
+  leadId,
+  campaignId,
+  subject: faker.lorem.slug(),
+  content: faker.lorem.sentences(2),
+  calendlyUrl: faker.internet.url(),
+})
