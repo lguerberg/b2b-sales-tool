@@ -1,15 +1,25 @@
 'use client'
 
 import { flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
+import { useMemo, useState } from 'react'
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table'
 import { DataTableProps } from './types'
 
-export function DataTable<TData, TValue>({ columns, data, onRowSelect = () => {} }: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
+  const includeSelect = useMemo(() => !!columns.find(c => c.id === 'select'), [columns])
+  const [rowSelection, setRowSelection] = useState({})
+
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    onRowSelectionChange: includeSelect
+      ? setRowSelection
+      : undefined,
+    state: {
+      rowSelection: includeSelect ? rowSelection : undefined,
+    },
   })
 
   return (
@@ -34,8 +44,7 @@ export function DataTable<TData, TValue>({ columns, data, onRowSelect = () => {}
               <TableRow
                 className="cursor-pointer"
                 key={row.id}
-                onClick={() => onRowSelect(row.id)}
-                data-state={row.getIsSelected() && 'selected'}
+                data-state={includeSelect ? row.getIsSelected() && 'selected' : undefined}
               >
                 {row.getVisibleCells().map(cell => (
                   <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
