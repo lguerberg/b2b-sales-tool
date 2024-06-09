@@ -1,7 +1,6 @@
 import { faker } from '@faker-js/faker'
 import { CampaingStatus, CompanySize, MessageStatus, Seniority } from '@prisma/client'
-
-import { hashPassword } from '../../src/infrastructure/utils/password.utils'
+import { hashPassword } from 'apps/api/src/infrastructure/utils/password.utils'
 
 export const createLocation = () => ({
   city: faker.location.city(),
