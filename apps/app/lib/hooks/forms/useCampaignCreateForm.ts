@@ -4,7 +4,11 @@ import { CreateCampaignBody, createCampaignBody } from '@api/infrastructure/sche
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 
+import useCampaignCreate from '../mutations/useCampaignCreate'
+
 export default function useCampaignCreateForm(groupId: string) {
+  const { createCampaign, isCreating } = useCampaignCreate(groupId)
+
   const form = useForm<CreateCampaignBody>({
     resolver: zodResolver(createCampaignBody),
     defaultValues: {
@@ -14,7 +18,7 @@ export default function useCampaignCreateForm(groupId: string) {
     },
   })
 
-  const onSubmit = (values: CreateCampaignBody) => {}
+  const onSubmit = (values: CreateCampaignBody) => createCampaign(values)
 
-  return { form, onSubmit }
+  return { form, isCreating, onSubmit }
 }

@@ -2,28 +2,26 @@
 
 import { GetCampaignDetailsResponse } from '@api/infrastructure/schemas/campaign/get-campaign-details.schema'
 import { DataTable } from '@app/components/table'
+import useMyCampaigns from '@app/lib/hooks/queries/useMyCampaigns'
+import { ReloadIcon } from '@radix-ui/react-icons'
 import { useState } from 'react'
 
 import CampaignDetails from './CampaignDetails'
 import { columns } from './columns'
-import { mockCampaigns } from './mock'
 
 export default function CampaignsTable() {
+  const { campaigns, isLoading } = useMyCampaigns()
+
   const [campaignSelected, setCampaignSelected] = useState<GetCampaignDetailsResponse | null>(null)
 
-  const onCampaignSelect = (index: string) => {
-    const campaign = mockCampaigns[parseInt(index)]
-    if (campaign) {
-      setCampaignSelected(campaign)
-    }
-  }
+  if (isLoading || campaigns === undefined) return <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
 
   return (
     <>
       <DataTable
         columns={columns}
-        data={mockCampaigns.map(c => ({
-          name: c.name,
+        data={campaigns.map(c => ({
+          name: c.name || 'test',
           description: c.description,
           status: c.status,
           groupName: c.group.name,

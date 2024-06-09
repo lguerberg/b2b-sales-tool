@@ -14,9 +14,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
-    onRowSelectionChange: includeSelect
-      ? setRowSelection
-      : undefined,
+    onRowSelectionChange: includeSelect ? setRowSelection : undefined,
     state: {
       rowSelection: includeSelect ? rowSelection : undefined,
     },
