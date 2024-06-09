@@ -40,10 +40,12 @@ export const columns: (
     cell: ({ row }) => <div className="text-center">{row.getValue('description')}</div>,
   },
   {
-    id: 'groupName',
+    id: 'group',
     accessorKey: 'group',
-    header: () => <div className="text-center">Group Name</div>,
-    cell: ({ row }) => <div className="text-center">test</div>,
+    header: () => <div className="text-center">Group</div>,
+    cell: ({ row }) => (
+      <div className="text-center">{(row.getValue('group') as GetCampaignDetailsResponse['group']).name}</div>
+    ),
   },
   {
     id: 'status',
