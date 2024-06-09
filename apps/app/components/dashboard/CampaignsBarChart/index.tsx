@@ -18,7 +18,7 @@ export default function CampaignsBarChart() {
         <BarChart
           data={Object.keys(data?.callsPerMonthByIndustry || {}).map(key => ({
             name: key,
-            total: data!.callsPerMonthByIndustry[key],
+            total: data?.callsPerMonthByIndustry[key as keyof (typeof data)['callsPerMonthByIndustry']],
           }))}
         />
       </CardContent>
