@@ -1,15 +1,32 @@
+import { GetCampaignDetailsResponse } from '@api/infrastructure/schemas/campaign/get-campaign-details.schema'
+import { Button } from '@app/components/ui/button'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from '@app/components/ui/dropdown-menu'
 import { ColumnDef } from '@tanstack/react-table'
+import { MoreHorizontal } from 'lucide-react'
 
-import { CampaignColumn } from './types'
-
-export const statusClasses = {
+const statusClasses = {
   PENDING: 'text-orange-500',
   CREATING: 'text-blue-500',
   SENDING: 'text-purple-500',
   SENT: 'text-green-500',
 }
 
-export const columns: ColumnDef<CampaignColumn>[] = [
+export const columns: (
+  onEditCampaign: (campaignId: string) => void,
+) => ColumnDef<GetCampaignDetailsResponse>[] = onEditCampaign => [
+  {
+    id: 'id',
+    accessorKey: 'id',
+    hidden: true,
+    header: () => <div className="text-center">Identifier</div>,
+    cell: ({ row }) => <div className="text-center">{row.getValue('id')}</div>,
+  },
   {
     id: 'name',
     accessorKey: 'name',
@@ -24,15 +41,9 @@ export const columns: ColumnDef<CampaignColumn>[] = [
   },
   {
     id: 'groupName',
-    accessorKey: 'groupName',
+    accessorKey: 'group',
     header: () => <div className="text-center">Group Name</div>,
-    cell: ({ row }) => <div className="text-center">{row.getValue('groupName')}</div>,
-  },
-  {
-    id: 'leads',
-    accessorKey: 'leads',
-    header: () => <div className="text-center">Leads count</div>,
-    cell: ({ row }) => <div className="text-center">{row.getValue('leads')}</div>,
+    cell: ({ row }) => <div className="text-center">test</div>,
   },
   {
     id: 'status',
@@ -43,5 +54,26 @@ export const columns: ColumnDef<CampaignColumn>[] = [
         {row.getValue('status')}
       </div>
     ),
+  },
+  {
+    id: 'actions',
+    cell: ({ row }) => {
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="h-8 w-8 p-0">
+              <span className="sr-only">Open menu</span>
+              <MoreHorizontal className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuItem className="cursor-pointer" onClick={() => onEditCampaign(row.getValue('id'))}>
+              See details
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      )
+    },
   },
 ]

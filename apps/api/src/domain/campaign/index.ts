@@ -25,6 +25,11 @@ export interface CampaignEmail {
   body: string
   openedAt?: Date
   isClicked: boolean
+  lead: {
+    id: string
+    name: string
+    email: string
+  }
   status: MessageStatus
 }
 

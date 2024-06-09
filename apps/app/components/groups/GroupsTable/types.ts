@@ -4,4 +4,8 @@ export type Group = {
   description: string
 }
 
-export type GroupsTableProps = {}
+export type GroupLeadColumn = {
+  name: string
+  jobTitle: string
+  seniority: string
+}

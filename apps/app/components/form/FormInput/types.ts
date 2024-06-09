@@ -8,4 +8,5 @@ export type FormInputProps = {
   value: any
   onChange: (value: any) => void
   options?: SelectInputProps['options']
+  disabled?: boolean
 }

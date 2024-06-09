@@ -11,7 +11,14 @@ import { MoreHorizontal } from 'lucide-react'
 
 import { Group } from './types'
 
-export const columns: (onViewLeads: (rowId: string) => void) => ColumnDef<Group>[] = onViewLeads => [
+export const columns: (onViewLeads: (groupId: string) => void) => ColumnDef<Group>[] = onViewLeads => [
+  {
+    id: 'id',
+    accessorKey: 'id',
+    hidden: true,
+    header: () => <div className="text-center">ID</div>,
+    cell: ({ row }) => <div className="text-center">{row.getValue('id')}</div>,
+  },
   {
     id: 'name',
     accessorKey: 'name',
@@ -37,7 +44,7 @@ export const columns: (onViewLeads: (rowId: string) => void) => ColumnDef<Group>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem className="cursor-pointer" onClick={() => onViewLeads(row.id)}>
+            <DropdownMenuItem className="cursor-pointer" onClick={() => onViewLeads(row.getValue('id'))}>
               View leads
             </DropdownMenuItem>
           </DropdownMenuContent>

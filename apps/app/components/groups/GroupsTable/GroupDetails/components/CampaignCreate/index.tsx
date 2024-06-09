@@ -7,8 +7,8 @@ import useCampaignCreateForm from '@app/lib/hooks/forms/useCampaignCreateForm'
 
 import { CampaingCreateProps } from './types'
 
-export default function CampaignCreate({ groupId }: CampaingCreateProps) {
-  const { form, isCreating, onSubmit } = useCampaignCreateForm(groupId)
+export default function CampaignCreate({ groupId, onCreateSuccess }: CampaingCreateProps) {
+  const { form, isCreating, onSubmit } = useCampaignCreateForm(groupId, onCreateSuccess)
 
   return (
     <>

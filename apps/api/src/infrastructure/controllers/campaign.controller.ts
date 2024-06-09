@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Put, Query, UsePipes } from '@nestjs/common'
+import { Body, Controller, Get, Param, ParseIntPipe, Put, Query, UsePipes } from '@nestjs/common'
 
 import { User } from '@/domain/user'
 
@@ -19,7 +19,11 @@ export class CampaignController {
   ) {}
 
   @Get('me/campaigns')
-  async getMyCampaigns(@LoggedUser() user: User, @Query('limit') limit: number, @Query('offset') offset: number) {
+  async getMyCampaigns(
+    @LoggedUser() user: User,
+    @Query('limit', new ParseIntPipe()) limit: number,
+    @Query('offset', new ParseIntPipe()) offset: number,
+  ) {
     const paginateResult = await this.getUserCampaigns.execute(user.id, limit, offset)
     return {
       ...paginateResult,
@@ -34,7 +38,7 @@ export class CampaignController {
   }
 
   @Put('campaigns/:campaignId/leads/:leadId/message')
-  @UsePipes(new ValidationPipe(editCampaignMessageBody))
+  //   @UsePipes(new ValidationPipe(editCampaignMessageBody))
   async editMessage(
     @Param('campaignId') campaignId: string,
     @Param('leadId') leadId: string,

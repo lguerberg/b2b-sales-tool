@@ -7,8 +7,6 @@ export type CampaignColumn = {
 }
 
 export type CampaingEmailColumn = {
-  email: string
-  subject: string
-  body: string
+  name: string
   status: string
 }

@@ -47,3 +47,5 @@ export const ROUTES = {
 } as const
 
 export const USER_COOKIE = 'auth_token'
+
+export const PAGE_SIZE = 10

@@ -6,8 +6,8 @@ import { useForm } from 'react-hook-form'
 
 import useCampaignCreate from '../mutations/useCampaignCreate'
 
-export default function useCampaignCreateForm(groupId: string) {
-  const { createCampaign, isCreating } = useCampaignCreate(groupId)
+export default function useCampaignCreateForm(groupId: string, onCreateSuccess: () => void) {
+  const { createCampaign, isCreating } = useCampaignCreate(groupId, onCreateSuccess)
 
   const form = useForm<CreateCampaignBody>({
     resolver: zodResolver(createCampaignBody),

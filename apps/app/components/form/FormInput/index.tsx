@@ -13,6 +13,7 @@ export default function FormInput({
   type = 'text',
   options,
   value,
+  disabled,
   onChange,
   ...field
 }: FormInputProps) {
@@ -22,7 +23,9 @@ export default function FormInput({
       {description && <FormDescription>{description}</FormDescription>}
       <FormControl>
         <>
-          {type === 'text' && <Input onChange={onChange} placeholder={placeholder} {...field} />}
+          {type === 'text' && (
+            <Input onChange={onChange} placeholder={placeholder} disabled={disabled} value={value} {...field} />
+          )}
           {type === 'password' && <PasswordInput onChange={onChange} {...field} />}
           {type === 'select' && <SelectInput options={options} />}
           {type === 'checkbox' && <CheckboxInput value={value} onChange={onChange} />}

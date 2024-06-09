@@ -1,4 +1,9 @@
-import { Campaign as PrismaCampaign, CampaignEmail as PrismaCampaignEmail, Group as PrismaGroup } from '@prisma/client'
+import {
+  Campaign as PrismaCampaign,
+  CampaignEmail as PrismaCampaignEmail,
+  Group as PrismaGroup,
+  Lead as PrismaLead,
+} from '@prisma/client'
 
 import { Campaign } from '@/domain/campaign'
 
@@ -9,7 +14,7 @@ export const mapPrismaCampaignToDomain = (
   campaign: PrismaCampaign,
   extra: {
     group: PrismaGroup
-    emails?: PrismaCampaignEmail[]
+    emails?: (PrismaCampaignEmail & { lead: PrismaLead })[]
   },
 ): Campaign =>
   ({
@@ -33,6 +38,11 @@ export const mapPrismaCampaignToDomain = (
           openedAt: email.openedAt || undefined,
           isClicked: email.isClicked,
           status: email.status,
+          lead: {
+            id: email.lead.id,
+            name: `${email.lead.firstName} ${email.lead.lastName}`,
+            email: email.lead.email,
+          },
         }))
       : [],
     group: mapPrismaGroupToDomain(extra.group),
@@ -49,9 +59,15 @@ export const mapToGetCampaignDetailsResponse = (campaign: Campaign) =>
       description: campaign.group.description,
     },
     emails: campaign.emails.map(email => ({
+      id: email.id,
       subject: email.subject,
       message: email.body,
       status: email.status,
+      lead: {
+        id: email.lead.id,
+        email: email.lead.email,
+        name: `${email.lead.name}`,
+      },
     })),
     analytics: {
       emailsSentCount: campaign.analytics.emailsSentCount,

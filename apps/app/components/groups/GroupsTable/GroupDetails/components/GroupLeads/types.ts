@@ -1,5 +1,4 @@
 export type GroupLeadsProps = {
-  // TODO TYPE LEADS
-  leads: any[]
+  groupId: string
   onCampaignCreateClick: () => void
 }

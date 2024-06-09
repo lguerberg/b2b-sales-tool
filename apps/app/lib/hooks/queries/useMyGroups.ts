@@ -1,27 +1,25 @@
 'use client'
 
-import { GetCampaignDetailsResponse } from '@api/infrastructure/schemas/campaign/get-campaign-details.schema'
+import { GroupDTO } from '@api/infrastructure/schemas/group/dto'
 import { Paginated } from '@api/infrastructure/types/paginate'
 import api from '@app/lib/api'
 import { PAGE_SIZE } from '@app/lib/constants'
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 
-export default function useMyCampaigns() {
+export default function useMyGroups() {
   const [page, setPage] = useState(0)
   const {
-    data: campaigns,
+    data: groups,
     isLoading,
     isFetching,
   } = useQuery({
-    queryKey: ['MyCampaigns', page],
+    queryKey: ['MyGroups', page],
     placeholderData: keepPreviousData,
     queryFn: async () => {
-      const response = await api.get<Paginated<GetCampaignDetailsResponse>>(
-        `me/campaigns?limit=${PAGE_SIZE}&offset=${page * PAGE_SIZE}`,
-      )
+      const response = await api.get<Paginated<GroupDTO>>(`me/groups?limit=${PAGE_SIZE}&offset=${page * PAGE_SIZE}`)
       return response.data
     },
   })
-  return { campaigns, isLoading, isFetching, page, setPage }
+  return { groups, isLoading, page, isFetching, setPage }
 }

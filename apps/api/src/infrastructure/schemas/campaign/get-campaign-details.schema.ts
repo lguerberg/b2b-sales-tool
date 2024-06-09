@@ -11,6 +11,12 @@ export const getCampaignDetailsResponse = z.object({
   }),
   emails: z.array(
     z.object({
+      lead: z.object({
+        id: z.string(),
+        name: z.string(),
+        email: z.string(),
+      }),
+      id: z.string(),
       subject: z.string(),
       message: z.string(),
       status: z.string(),

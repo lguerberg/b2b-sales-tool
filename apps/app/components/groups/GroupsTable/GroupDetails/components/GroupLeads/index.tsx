@@ -1,10 +1,15 @@
 import TextButton from '@app/components/buttons/TextButton'
+import { DataTable } from '@app/components/table'
 import { DialogDescription, DialogHeader, DialogTitle } from '@app/components/ui/dialog'
 import { ScrollArea } from '@app/components/ui/scroll-area'
+import { Skeleton } from '@app/components/ui/skeleton'
+import useGroupLeads from '@app/lib/hooks/queries/useGroupLeads'
 
+import { columns } from './columns'
 import { GroupLeadsProps } from './types'
 
-export default function GroupLeads({ leads, onCampaignCreateClick }: GroupLeadsProps) {
+export default function GroupLeads({ groupId, onCampaignCreateClick }: GroupLeadsProps) {
+  const { leads, isLoading } = useGroupLeads(groupId)
   return (
     <>
       <DialogHeader>
@@ -13,19 +18,20 @@ export default function GroupLeads({ leads, onCampaignCreateClick }: GroupLeadsP
           Here is a list of the leads in this group. You can create a campaign for them.
         </DialogDescription>
       </DialogHeader>
-      <ScrollArea className="h-72 rounded-md border">
-        {leads.map((lead, index) => (
-          <div key={index} className="flex justify-between items-center p-2 border-b border-gray-200">
-            <div className="flex-1 text-left text-sm font-semibold text-gray-700">{lead.name}</div>
-            <div className="flex-1 text-center text-sm text-gray-500">{lead.role}</div>
-            <div
-              className={`flex-1 text-right text-sm font-medium ${lead.seniority === 'Senior' ? 'text-red-500' : lead.seniority === 'Mid' ? 'text-yellow-500' : 'text-green-500'}`}
-            >
-              {lead.seniority}
-            </div>
-          </div>
-        ))}
-      </ScrollArea>
+      {isLoading || leads === undefined ? (
+        <Skeleton className="w-full h-[300px] rounded" />
+      ) : (
+        <ScrollArea className="h-72 rounded-md border">
+          <DataTable
+            columns={columns}
+            data={leads.map(lead => ({
+              name: `${lead.firstName} ${lead.lastName}`,
+              seniority: lead.currentPosition.seniority,
+              jobTitle: lead.currentPosition.jobTitle,
+            }))}
+          />
+        </ScrollArea>
+      )}
       <TextButton className="w-full mt-5" onClick={onCampaignCreateClick}>
         Configure campaign
       </TextButton>
