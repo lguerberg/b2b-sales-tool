@@ -9,8 +9,8 @@ export function SelectInput({ options = [] }: SelectInputProps) {
         <SelectValue />
       </SelectTrigger>
       <SelectContent>
-        {options.map(option => (
-          <SelectItem key={option.value} value={option.label}>
+        {options.map((option, i) => (
+          <SelectItem key={option.label} value={option.value.toString()}>
             {option.label}
           </SelectItem>
         ))}
