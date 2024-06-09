@@ -14,6 +14,7 @@ COPY ./pnpm-workspace.yaml /app/pnpm-workspace.yaml
 COPY ./package.json /app/package.json
 COPY ./tsconfig.json /app/tsconfig.json
 COPY ./apps/api/package.json /app/apps/api/package.json
+COPY ./apps/api/tsconfig.json /app/apps/api/tsconfig.json
 
 ENV NODE_ENV production
 RUN pnpm install
