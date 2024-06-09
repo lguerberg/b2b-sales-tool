@@ -1,7 +1,7 @@
 import { LoginSchema } from '../schemas/login'
 
 export const login = (values: LoginSchema) =>
-  fetch('/api/login', {
+  fetch(`${process.env.NEXT_API_URL}/api/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -10,6 +10,6 @@ export const login = (values: LoginSchema) =>
   })
 
 export const logout = () =>
-  fetch('/api/logout', {
+  fetch(`${process.env.NEXT_API_URL}/api/logout`, {
     method: 'POST',
   })
