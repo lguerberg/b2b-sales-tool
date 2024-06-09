@@ -1,5 +1,4 @@
 import { ArgumentsHost, Catch, ExceptionFilter, HttpStatus, Logger } from '@nestjs/common'
-import { Request, Response } from 'express'
 
 import { ErrorCodes, getErrorMessageByInternalCode, getStatusCodeByInternalCode } from '../constants'
 import RequestError from '../request.error'
@@ -8,8 +7,8 @@ import RequestError from '../request.error'
 export class RequestErrorFilter implements ExceptionFilter {
   catch(error: RequestError, host: ArgumentsHost) {
     const ctx = host.switchToHttp()
-    const response = ctx.getResponse<Response>()
-    const request = ctx.getRequest<Request>()
+    const response = ctx.getResponse()
+    const request = ctx.getRequest()
 
     let httpStatus = getStatusCodeByInternalCode[error.internalCode]
     let errorMessage = getErrorMessageByInternalCode[error.internalCode]

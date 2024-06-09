@@ -1,5 +1,4 @@
 import { ArgumentsHost, Catch, ExceptionFilter, HttpStatus, Logger } from '@nestjs/common'
-import { Request, Response } from 'express'
 
 import { ErrorCodes, getErrorMessageByInternalCode } from '../constants'
 
@@ -8,8 +7,8 @@ export class GlobalExceptionFilter implements ExceptionFilter {
   constructor() {}
   catch(exception: any, host: ArgumentsHost): void {
     const ctx = host.switchToHttp()
-    const response = ctx.getResponse<Response>()
-    const request = ctx.getRequest<Request>()
+    const response = ctx.getResponse()
+    const request = ctx.getRequest()
     let status = exception.status
     let internalCode = ErrorCodes.ROUTE_NOT_FOUND_ERROR
     const logger = new Logger(GlobalExceptionFilter.name)
