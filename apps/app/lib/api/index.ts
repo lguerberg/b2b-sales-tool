@@ -12,11 +12,13 @@ const api = axios.create({ baseURL: process.env.NEXT_PUBLIC_API_URL })
 
 api.interceptors.request.use(
   async config => {
-    // TODO: Query cookie server side
-    // const token = getCookie(USER_COOKIE)
-    // if (token) {
-    //   config.headers['Authorization'] = `Bearer ${token}`
-    // }
+    const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/session`)
+    if (response.ok) {
+      const { token } = await response.json()
+      if (token !== '') {
+        config.headers['Authorization'] = `Bearer ${token}`
+      }
+    }
     return config
   },
   error => {
