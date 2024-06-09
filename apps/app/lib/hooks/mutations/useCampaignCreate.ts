@@ -12,7 +12,7 @@ export default function useCampaignCreate(groupId: string, onCreateSuccess: () =
     mutationFn: async (values: CreateCampaignBody) => api.post(`/groups/${groupId}/campaign`, values),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        predicate: query => query.queryKey[0] === 'MyCampaigns',
+        queryKey: ['MyCampaigns', 0],
       })
       onCreateSuccess()
       toast({
