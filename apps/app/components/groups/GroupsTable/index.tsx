@@ -11,8 +11,7 @@ export default function GroupsTable() {
   return (
     <>
       <DataTable
-        columns={columns}
-        onRowSelect={setGroupSelected}
+        columns={columns(setGroupSelected)}
         data={[
           { id: '1', name: 'Group 1', description: 'Description 1' },
           { id: '2', name: 'Group 2', description: 'Description 2' },
