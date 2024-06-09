@@ -36,7 +36,6 @@ RUN corepack enable
 RUN pnpm add -g @nestjs/cli
 RUN pnpm add -g prisma
 
-
 # Copy source files
 COPY . /app
 
