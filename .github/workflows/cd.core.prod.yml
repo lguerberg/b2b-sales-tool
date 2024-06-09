@@ -11,7 +11,7 @@ on:
       - apps/api/**
 
 env:
-  IMAGE_URL: registry.digitalocean.com/registry/core-sales:prod-${{ github.sha }}
+  IMAGE_URL: registry.digitalocean.com/silver-registry/core-sales:prod-${{ github.sha }}
 
 jobs:
   build:
