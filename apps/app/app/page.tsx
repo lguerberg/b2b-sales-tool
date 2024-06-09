@@ -1,6 +1,6 @@
 'use client'
 
-import IndustryBarChart from '@app/components/dashboard/IndustryBarChart'
+import CampaignsBarChart from '@app/components/dashboard/CampaignsBarChart'
 import UserMetrics from '@app/components/dashboard/UserMetrics'
 import SectionDescription from '@app/components/titles/SectionDescription'
 import SectionTitle from '@app/components/titles/SectionTitle'
@@ -13,7 +13,7 @@ import Link from 'next/link'
 
 export default function Dashboard() {
   const { loggedUser, isLoading: isUserLoading } = useLoggedUser()
-  const { data, isLoading: isLoadingData } = useDashboardData()
+  const { isLoading: isLoadingData } = useDashboardData()
 
   return (
     <div className="flex flex-col gap-10">
@@ -34,12 +34,12 @@ export default function Dashboard() {
         <UserMetrics />
       </div>
       <div className="flex flex-col">
-        <SectionTitle isLoading={isLoadingData}>Check this data about your potential leads</SectionTitle>
+        <SectionTitle isLoading={isLoadingData}>Global data that can be useful for you</SectionTitle>
         <SectionDescription isLoading={isLoadingData}>
-          Here you will see updated information about {data?.targetIndustry} leads
+          Here you will see updated information about what is going on in the market.
         </SectionDescription>
       </div>
-      <IndustryBarChart />
+      <CampaignsBarChart />
     </div>
   )
 }

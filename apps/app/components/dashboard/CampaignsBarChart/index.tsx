@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@app/
 import { Skeleton } from '@app/components/ui/skeleton'
 import useDashboardData from '@app/lib/hooks/queries/useDashboardData'
 
-export default function IndustryBarChart() {
+export default function CampaignsBarChart() {
   const { data, isLoading } = useDashboardData()
 
   return isLoading ? (
@@ -11,8 +11,8 @@ export default function IndustryBarChart() {
   ) : (
     <Card>
       <CardHeader>
-        <CardTitle className="text-md font-medium lg:text-lg">Campaigns impact by month</CardTitle>
-        <CardDescription> How many calls have been scheduled in the industry by month </CardDescription>
+        <CardTitle className="text-md font-medium lg:text-lg">Marketing effort by month</CardTitle>
+        <CardDescription> How many calls have been scheduled by month </CardDescription>
       </CardHeader>
       <CardContent className="pl-2">
         <BarChart
