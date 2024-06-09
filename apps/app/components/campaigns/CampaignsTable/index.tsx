@@ -9,11 +9,11 @@ import CampaignDetails from './CampaignDetails'
 import { columns } from './columns'
 
 export default function CampaignsTable() {
-  const { campaigns, isLoading, isFetching, page, setPage } = useMyCampaigns()
+  const { campaigns, isLoading, page, setPage } = useMyCampaigns()
 
   const [campaignSelected, setCampaignSelected] = useState('')
 
-  if (isLoading || isFetching || campaigns === undefined) return <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+  if (isLoading || campaigns === undefined) return <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
 
   return (
     <>

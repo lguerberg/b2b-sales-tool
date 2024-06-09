@@ -22,6 +22,7 @@ export default function useMyCampaigns() {
       )
       return response.data
     },
+    refetchInterval: 10000,
   })
   return { campaigns, isLoading, isFetching, page, setPage }
 }
