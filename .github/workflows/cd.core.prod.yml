@@ -8,10 +8,10 @@ on:
     branches:    
       - main
     paths:
-      - apps/api/**
+      - 'apps/api/**'
 
 env:
-  IMAGE_URL: registry.digitalocean.com/silver-registry/core-sales:prod-${{ github.sha }}
+  IMAGE_URL: registry.digitalocean.com/silver-registry/core-sales:latest
 
 jobs:
   build:
@@ -37,3 +37,4 @@ jobs:
       
       - name: Push image to DigitalOcean Container Registry
         run: docker push ${{ env.IMAGE_URL }}
+      
