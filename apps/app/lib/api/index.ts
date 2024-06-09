@@ -12,7 +12,7 @@ const api = axios.create({ baseURL: process.env.NEXT_PUBLIC_API_URL })
 
 api.interceptors.request.use(
   async config => {
-    const response = await fetch(`/api/session`)
+    const response = await fetch(`${typeof window === 'undefined' ? process.env.NEXT_APP_URL : ''}/api/session`)
     if (response.ok) {
       const { token } = await response.json()
       if (token !== '') {
