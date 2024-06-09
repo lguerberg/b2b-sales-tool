@@ -11,8 +11,8 @@ export const statusClasses = {
 
 export const columns: ColumnDef<CampaignColumn>[] = [
   {
-    id: 'Name',
-    accessorKey: 'Name',
+    id: 'name',
+    accessorKey: 'name',
     header: () => <div className="text-center">Name</div>,
     cell: ({ row }) => <div className="text-center">{row.getValue('name')}</div>,
   },
