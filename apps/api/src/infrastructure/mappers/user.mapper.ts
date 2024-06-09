@@ -2,6 +2,8 @@ import { Company as PrismaCompany, CompanyOnboard as PrismaOnboard, User as Pris
 
 import { User } from '@/domain/user'
 
+import { MeResponse } from '../schemas/auth/me.schema'
+
 export const mapPrismaUserToDomain = (
   prismaUser: PrismaUser,
   extra?: {
@@ -33,3 +35,12 @@ export const mapPrismaUserToDomain = (
         }
       : undefined,
   }) satisfies User
+
+export const mapToMeResponse = (user: User) =>
+  ({
+    id: user.id,
+    email: user.email,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    avatarUrl: user.avatarUrl,
+  }) satisfies MeResponse
