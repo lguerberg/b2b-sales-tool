@@ -1,6 +1,5 @@
 import { faker } from '@faker-js/faker'
 import { PrismaClient } from '@prisma/client'
-import { batchedPromiseAll } from 'batched-promise-all'
 
 import {
   UsersToSeed,

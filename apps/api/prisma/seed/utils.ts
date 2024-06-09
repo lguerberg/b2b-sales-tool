@@ -1,5 +1,5 @@
-import { de, faker } from '@faker-js/faker'
-import { CampaingStatus, CompanySize, Seniority } from '@prisma/client'
+import { faker } from '@faker-js/faker'
+import { CampaingStatus, CompanySize, MessageStatus, Seniority } from '@prisma/client'
 
 import { hashPassword } from '../../src/infrastructure/utils/password.utils'
 
@@ -96,6 +96,10 @@ export const createGroupWithCampaigns = (campaignsCount: number, userCreatedId: 
           emailsOpenedCount,
           emailsClickedCount,
           meetingsScheduledCount,
+          createdAt: faker.date.between({
+            from: new Date('2021-01-01'),
+            to: new Date(),
+          }),
         })),
       },
     },
@@ -113,4 +117,5 @@ export const createCampaignEmail = (campaignId: string, leadId: string) => ({
   subject: faker.lorem.slug(),
   content: faker.lorem.sentences(2),
   calendlyUrl: faker.internet.url(),
+  status: MessageStatus.SUCCESS,
 })

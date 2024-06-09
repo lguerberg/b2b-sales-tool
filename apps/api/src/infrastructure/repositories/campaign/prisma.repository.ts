@@ -4,9 +4,11 @@ import { $Enums, CampaingStatus } from '@prisma/client'
 import { Campaign, CampaignEmailData } from '@/domain/campaign'
 import { CampaignRepository } from '@/domain/campaign/repository'
 import { Lead } from '@/domain/lead'
+import { UserMetrics } from '@/domain/user'
 
 import { mapPrismaCampaignToDomain } from '../../mappers/campaign.mapper'
 import { PrismaService } from '../../services/prisma.service'
+import { filterByMonthIndex } from '../../utils/campaign.utils'
 import { hasMoreRecords } from '../../utils/paginate.utils'
 
 @Injectable()
@@ -19,7 +21,11 @@ export class PrismaCampaignRepository implements CampaignRepository {
         id,
       },
       include: {
-        emails: true,
+        emails: {
+          include: {
+            lead: true,
+          },
+        },
         group: true,
       },
     })
@@ -99,7 +105,7 @@ export class PrismaCampaignRepository implements CampaignRepository {
     })
   }
 
-  async findByUserId(userId: string, limit: number, offset: number) {
+  async findByUserId(userId: string, limit?: number, offset?: number) {
     const where = {
       group: {
         userCreatedId: userId,
@@ -113,6 +119,9 @@ export class PrismaCampaignRepository implements CampaignRepository {
         },
         take: limit,
         skip: offset,
+        orderBy: {
+          createdAt: 'desc',
+        },
       }),
       this.prisma.campaign.count({
         where,
@@ -125,7 +134,29 @@ export class PrismaCampaignRepository implements CampaignRepository {
           group: prismaCampaign.group,
         }),
       ),
-      hasMore: hasMoreRecords(total, limit, offset),
+      hasMore: limit && offset ? hasMoreRecords(total, limit, offset) : false,
     }
+  }
+
+  async findMonthlyMetrics() {
+    const campaigns = await this.prisma.campaign.findMany({
+      select: {
+        createdAt: true,
+      },
+    })
+    return {
+      january: filterByMonthIndex(campaigns, 0).length,
+      february: filterByMonthIndex(campaigns, 1).length,
+      march: filterByMonthIndex(campaigns, 2).length,
+      april: filterByMonthIndex(campaigns, 3).length,
+      may: filterByMonthIndex(campaigns, 4).length,
+      june: filterByMonthIndex(campaigns, 5).length,
+      july: filterByMonthIndex(campaigns, 6).length,
+      august: filterByMonthIndex(campaigns, 7).length,
+      september: filterByMonthIndex(campaigns, 8).length,
+      october: filterByMonthIndex(campaigns, 9).length,
+      november: filterByMonthIndex(campaigns, 10).length,
+      december: filterByMonthIndex(campaigns, 11).length,
+    } satisfies UserMetrics['callsPerMonthByIndustry']
   }
 }

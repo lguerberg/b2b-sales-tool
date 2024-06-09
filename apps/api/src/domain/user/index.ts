@@ -9,3 +9,24 @@ export interface User {
   avatarUrl?: string
   company?: Company
 }
+export interface UserMetrics {
+  campaigns: number
+  emailsSent: number
+  emailsOpened: number
+  scheduledCalls: number
+  targetIndustry: string
+  callsPerMonthByIndustry: {
+    january: number
+    february: number
+    march: number
+    april: number
+    may: number
+    june: number
+    july: number
+    august: number
+    september: number
+    october: number
+    november: number
+    december: number
+  }
+}
