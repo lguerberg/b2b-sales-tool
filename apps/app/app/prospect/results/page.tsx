@@ -9,8 +9,9 @@ import { FormField } from '@app/components/ui/form'
 import useGroupCreateForm from '@app/lib/hooks/forms/useGroupCreateForm'
 import useLeadsSearch from '@app/lib/hooks/queries/useLeadsSearch'
 import { ReloadIcon } from '@radix-ui/react-icons'
+import { AppProgressBar as ProgressBar } from 'next-nprogress-bar'
 import { useSearchParams } from 'next/navigation'
-import { useState } from 'react'
+import { Suspense, useState } from 'react'
 
 import { columns } from './columns'
 
@@ -73,6 +74,9 @@ export default function ProspectResults() {
           </FormWrapper>
         </DialogContent>
       </Dialog>
+      <Suspense>
+        <ProgressBar height="4px" color="#4f46e5" options={{ showSpinner: false, speed: 500 }} delay={500} />
+      </Suspense>
     </>
   )
 }
