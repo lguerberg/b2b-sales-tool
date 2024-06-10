@@ -19,8 +19,16 @@ Before running the API, you need to create a `.env` file in the `apps/api` direc
 1. Navigate to `apps/api`.
 2. Create a file named `.env`.
 3. Use `.env.example` as base secrets.
-4. Run `pnpm api:dev` to run the project.
-5. Run `pnpm:api:down` when you are not using it anymore.
+
+To run the project.
+```bash
+pnpm api:dev
+```
+
+When you are not using it anymore.
+```bash
+pnpm api:down
+```
 
 ### Seeding the database
 Run `pnpm seed` to seed your local database. 
@@ -32,5 +40,8 @@ Before running the APP, you need to create a `.env` file in the `apps/app` direc
 1. Navigate to `apps/app`.
 2. Create a file named `.env`.
 3. Use `.env.example` as base secrets.
-4. Run `pnpm app:dev` to run the project.
 
+To run the project.
+```bash
+pnpm app:dev
+```
