@@ -1,5 +1,6 @@
 import { faker } from '@faker-js/faker'
 import { CampaingStatus, CompanySize, MessageStatus, Seniority } from '@prisma/client'
+import { CollectionCreateSchema } from 'typesense/lib/Typesense/Collections'
 
 import { hashPassword } from '../../src/infrastructure/utils/password.utils'
 
@@ -119,3 +120,54 @@ export const createCampaignEmail = (campaignId: string, leadId: string) => ({
   calendlyUrl: faker.internet.url(),
   status: MessageStatus.SUCCESS,
 })
+
+export const leadsTypesenseSchema: CollectionCreateSchema = {
+  name: 'leads',
+  enable_nested_fields: true,
+  fields: [
+    {
+      name: 'id',
+      type: 'string',
+    },
+    {
+      name: 'name',
+      type: 'string',
+    },
+    {
+      name: 'email',
+      type: 'string',
+    },
+    {
+      name: 'jobTitle',
+      type: 'string',
+    },
+    {
+      name: 'seniority',
+      type: 'string',
+    },
+    {
+      name: 'language',
+      type: 'string',
+    },
+    {
+      name: 'industry',
+      type: 'string',
+    },
+    {
+      name: 'hqLocation',
+      type: 'string',
+    },
+    {
+      name: 'companyType',
+      type: 'string',
+    },
+    {
+      name: 'companySize',
+      type: 'string',
+    },
+    {
+      name: 'isDecisionMaker',
+      type: 'bool',
+    },
+  ],
+}

@@ -59,6 +59,9 @@ importers:
       rxjs:
         specifier: ^7.8.1
         version: 7.8.1
+      typesense:
+        specifier: ^1.8.2
+        version: 1.8.2(@babel/runtime@7.24.6)
       zod:
         specifier: ^3.23.8
         version: 3.23.8
@@ -219,6 +222,9 @@ importers:
       tailwindcss-animate:
         specifier: ^1.0.7
         version: 1.0.7(tailwindcss@3.4.3(ts-node@10.9.2(@types/node@20.14.0)(typescript@5.4.5)))
+      typesense:
+        specifier: ^1.8.2
+        version: 1.8.2(@babel/runtime@7.24.6)
       zod:
         specifier: ^3.23.8
         version: 3.23.8
@@ -3424,6 +3430,10 @@ packages:
     resolution: {integrity: sha512-8XPvpAA8uyhfteu8pIvQxpJZ7SYYdpUivZpGy6sFsBuKRY/7rQGavedeB8aK+Zkyq6upMFVL/9AW6vOYzfRyLg==}
     engines: {node: '>=10'}
 
+  loglevel@1.9.1:
+    resolution: {integrity: sha512-hP3I3kCrDIMuRwAwHltphhDM1r8i55H33GgqjXbrisuJhF4kRhW1dNuxsRklp4bXl8DSdLaNLuiL4A/LWRfxvg==}
+    engines: {node: '>= 0.6.0'}
+
   loose-envify@1.4.0:
     resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==}
     hasBin: true
@@ -4674,6 +4684,12 @@ packages:
     resolution: {integrity: sha512-vcI4UpRgg81oIRUFwR0WSIHKt11nJ7SAVlYNIu+QpqeyXP+gpQJy/Z4+F0aGxSE4MqwjyXvW/TzgkLAx2AGHwQ==}
     engines: {node: '>=14.17'}
     hasBin: true
+
+  typesense@1.8.2:
+    resolution: {integrity: sha512-aBpePjA99Qvo+OP2pJwMpvga4Jrm1Y2oV5NsrWXBxlqUDNEUCPZBIksPv2Hq0jxQxHhLLyJVbjXjByXsvpCDVA==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      '@babel/runtime': ^7.23.2
 
   uid@2.0.2:
     resolution: {integrity: sha512-u3xV3X7uzvi5b1MncmZo3i2Aw222Zk1keqLA1YkHldREkAhAqi65wuPfe7lHx8H/Wzy+8CE7S7uS3jekIM5s8g==}
@@ -8775,6 +8791,8 @@ snapshots:
       chalk: 4.1.2
       is-unicode-supported: 0.1.0
 
+  loglevel@1.9.1: {}
+
   loose-envify@1.4.0:
     dependencies:
       js-tokens: 4.0.0
@@ -10007,6 +10025,14 @@ snapshots:
   typescript@5.3.3: {}
 
   typescript@5.4.5: {}
+
+  typesense@1.8.2(@babel/runtime@7.24.6):
+    dependencies:
+      '@babel/runtime': 7.24.6
+      axios: 1.7.2
+      loglevel: 1.9.1
+    transitivePeerDependencies:
+      - debug
 
   uid@2.0.2:
     dependencies:
