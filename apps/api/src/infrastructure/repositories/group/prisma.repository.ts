@@ -31,6 +31,9 @@ export class PrismaGroupRepository implements GroupRepository {
         },
         take: limit,
         skip: offset,
+        orderBy: {
+          createdAt: 'desc',
+        },
       }),
       this.prisma.group.count({
         where: {

@@ -1,7 +1,15 @@
 'use client'
 
-import { flexRender, getCoreRowModel, getPaginationRowModel, useReactTable } from '@tanstack/react-table'
-import { useMemo, useState } from 'react'
+import {
+  RowSelectionState,
+  Updater,
+  flexRender,
+  getCoreRowModel,
+  getPaginationRowModel,
+  selectRowsFn,
+  useReactTable,
+} from '@tanstack/react-table'
+import { useEffect, useMemo, useState } from 'react'
 
 import { Button } from '../ui/button'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table'
@@ -13,11 +21,32 @@ export function DataTable<TData, TValue>({
   paginate = false,
   onNextPage = () => {},
   onPreviousPage = () => {},
+  onRowSelect,
   hasMoreResults,
   isFirstPage,
 }: DataTableProps<TData, TValue>) {
   const includeSelect = useMemo(() => !!columns.find(c => c.id === 'select'), [columns])
   const [rowSelection, setRowSelection] = useState({})
+
+  const handleNextPage = () => {
+    onNextPage()
+    table.nextPage()
+  }
+
+  const handlePreviousPage = () => {
+    onPreviousPage()
+    table.previousPage()
+  }
+
+  useEffect(() => {
+    if (onRowSelect) {
+      const selectedRows = table
+        .getRowModel()
+        .rows.filter(row => row.getIsSelected())
+        .map(row => parseInt(row.id))
+      onRowSelect(selectedRows.map(rowId => (data[rowId] as { id: string })['id']))
+    }
+  }, [rowSelection])
 
   const table = useReactTable({
     data,
@@ -29,16 +58,6 @@ export function DataTable<TData, TValue>({
       rowSelection: includeSelect ? rowSelection : undefined,
     },
   })
-
-  const handleNextPage = () => {
-    onNextPage()
-    table.nextPage()
-  }
-
-  const handlePreviousPage = () => {
-    onPreviousPage()
-    table.previousPage()
-  }
 
   return (
     <div>

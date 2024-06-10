@@ -1,5 +1,6 @@
 import Typesense from 'typesense'
 
+import { PAGE_SIZE } from './constants'
 import { ProspectSchema } from './schemas/prospect'
 
 const client = new Typesense.Client({
@@ -14,22 +15,19 @@ const client = new Typesense.Client({
   connectionTimeoutSeconds: 2,
 })
 
-export const searchPropspects = async (params: Partial<ProspectSchema>, page: number) =>
+export const searchLeads = async (params: Partial<ProspectSchema>, page: number) =>
   client
-    .collections('leads')
+    .collections<ProspectSchema>('leads')
     .documents()
     .search({
       q: '*',
       filter_by: Object.entries(params)
-        .map(([key, value]) => `${key}:${value}`)
+        .filter(([_, value]) => value !== '' && value !== undefined)
+        .map(([key, value]) => `${key}: ${value}`)
         .join(' && '),
-      group_limit: 1,
-      sort_by: 'desc',
-      page: page,
-      prefix: true,
-      per_page: 18,
+      page,
+      per_page: PAGE_SIZE,
       num_typos: 2,
-      min_len_1typo: 3,
       min_len_2typo: 6,
       typo_tokens_threshold: 3,
       drop_tokens_threshold: 3,

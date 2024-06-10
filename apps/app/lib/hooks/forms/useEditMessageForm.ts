@@ -36,7 +36,6 @@ export default function useEditMessageForm(
 
   useEffect(() => {
     if (email) {
-      console.log('RESSETING with', email)
       reset({
         message: email.message ?? '',
         subject: email.subject ?? '',

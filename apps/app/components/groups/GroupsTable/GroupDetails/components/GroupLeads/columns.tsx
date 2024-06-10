@@ -1,9 +1,8 @@
-import { GetCampaignDetailsResponse } from '@api/infrastructure/schemas/campaign/get-campaign-details.schema'
 import { ColumnDef } from '@tanstack/react-table'
 
 import { GroupLeadColumn } from '../../../types'
 
-const seniorityText = {
+export const seniorityText = {
   JR: 'Junior',
   SSR: 'Semi-Senior',
   SR: 'Senior',
@@ -12,7 +11,7 @@ const seniorityText = {
   C_LEVEL: 'C-Level',
 }
 
-const seniorityClasses = {
+export const seniorityClasses = {
   JR: 'text-blue-400',
   SSR: 'text-green-400',
   SR: 'text-yellow-400',

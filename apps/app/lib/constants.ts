@@ -39,6 +39,11 @@ export const ROUTES = {
     path: '/prospect',
     private: true,
   },
+  PROSPECT_RESULTS: {
+    name: 'Prospect results',
+    path: '/prospect/results',
+    private: true,
+  },
   PROFILE: {
     name: 'Profile',
     path: '/profile',
