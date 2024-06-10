@@ -21,8 +21,8 @@ const statusClasses = {
 const statusTexts = {
   PENDING: 'Pending to launch',
   CREATING: 'Creating',
-  SENDING: 'Sending',
-  SENT: 'Sent',
+  SENDING: 'Launched',
+  SENT: 'Finished',
 }
 
 export const columns: (
