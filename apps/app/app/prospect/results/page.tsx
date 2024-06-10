@@ -9,7 +9,6 @@ import { FormField } from '@app/components/ui/form'
 import useGroupCreateForm from '@app/lib/hooks/forms/useGroupCreateForm'
 import useLeadsSearch from '@app/lib/hooks/queries/useLeadsSearch'
 import { ReloadIcon } from '@radix-ui/react-icons'
-import { AppProgressBar as ProgressBar } from 'next-nprogress-bar'
 import { useSearchParams } from 'next/navigation'
 import { Suspense, useState } from 'react'
 
@@ -38,7 +37,7 @@ export default function ProspectResults() {
   }
 
   return (
-    <>
+    <Suspense>
       <div className="flex flex-col gap-5">
         <TextButton loading={isCreating} disabled={leadIds.length === 0} onClick={() => setIsCreatingGroup(true)}>
           Create group
@@ -74,9 +73,6 @@ export default function ProspectResults() {
           </FormWrapper>
         </DialogContent>
       </Dialog>
-      <Suspense>
-        <ProgressBar height="4px" color="#4f46e5" options={{ showSpinner: false, speed: 500 }} delay={500} />
-      </Suspense>
-    </>
+    </Suspense>
   )
 }
