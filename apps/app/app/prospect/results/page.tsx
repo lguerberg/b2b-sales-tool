@@ -14,7 +14,15 @@ import { Suspense, useState } from 'react'
 
 import { columns } from './columns'
 
-export default function ProspectResults() {
+export default function Page() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ProspectResults />
+    </Suspense>
+  )
+}
+
+function ProspectResults() {
   const [isCreatingGroup, setIsCreatingGroup] = useState(false)
   const { form, isCreating, onSubmit, setLeadIds, leadIds } = useGroupCreateForm()
 
@@ -37,7 +45,7 @@ export default function ProspectResults() {
   }
 
   return (
-    <Suspense>
+    <>
       <div className="flex flex-col gap-5">
         <TextButton loading={isCreating} disabled={leadIds.length === 0} onClick={() => setIsCreatingGroup(true)}>
           Create group
@@ -73,6 +81,6 @@ export default function ProspectResults() {
           </FormWrapper>
         </DialogContent>
       </Dialog>
-    </Suspense>
+    </>
   )
 }
