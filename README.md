@@ -45,3 +45,12 @@ To run the project.
 ```bash
 pnpm app:dev
 ```
+
+## Project information
+
+* [Tech documentation](https://www.notion.so/Tech-b830771c75b94393b7636d35b86a9ab3)
+* [Product documentation](https://www.notion.so/Product-6b602039b30447329e58e7f147ed2199)
+* [Demo walktrough](https://www.notion.so/Demo-a4c84e8cb6794538a67ea75fd14928f2)
+
+
+
