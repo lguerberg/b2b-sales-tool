@@ -7,6 +7,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from '@app/components/ui/dropdown-menu'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@app/components/ui/tooltip'
 import { ColumnDef } from '@tanstack/react-table'
 import { MoreHorizontal } from 'lucide-react'
 
@@ -15,6 +16,13 @@ const statusClasses = {
   CREATING: 'text-blue-500',
   SENDING: 'text-purple-500',
   SENT: 'text-green-500',
+}
+
+const statusTexts = {
+  PENDING: 'Pending to launch',
+  CREATING: 'Creating',
+  SENDING: 'Sending',
+  SENT: 'Sent',
 }
 
 export const columns: (
@@ -53,7 +61,7 @@ export const columns: (
     header: () => <div className="text-center">Status</div>,
     cell: ({ row }) => (
       <div className={`text-center font-bold ${statusClasses[row.getValue('status') as keyof typeof statusClasses]}`}>
-        {row.getValue('status')}
+        {statusTexts[row.getValue('status') as keyof typeof statusTexts]}
       </div>
     ),
   },
@@ -73,6 +81,20 @@ export const columns: (
             <DropdownMenuItem className="cursor-pointer" onClick={() => onEditCampaign(row.getValue('id'))}>
               See details
             </DropdownMenuItem>
+            {row.getValue('status') === 'PENDING' && (
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <DropdownMenuItem disabled className="cursor-pointer">
+                      Launch
+                    </DropdownMenuItem>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Launch campaign will be ready in future versions</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            )}
           </DropdownMenuContent>
         </DropdownMenu>
       )
