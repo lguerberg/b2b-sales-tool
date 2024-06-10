@@ -8,7 +8,7 @@ import SectionTitle from '@app/components/titles/SectionTitle'
 import { FormField } from '@app/components/ui/form'
 import useProspectForm from '@app/lib/hooks/forms/useProspectForm'
 
-import { SENIORITIES } from './constants'
+import { COMPANY_SIZES, LANGUAGES, SENIORITIES } from './constants'
 
 export default function Prospect() {
   const { form, onSubmit } = useProspectForm()
@@ -55,7 +55,18 @@ export default function Prospect() {
           <FormField
             control={form.control}
             name="language"
-            render={({ field }) => <FormInput label="Language" placeholder="English" {...field} />}
+            render={({ field }) => (
+              <FormInput
+                type="select"
+                options={LANGUAGES.map(lang => ({
+                  label: lang.toUpperCase(),
+                  value: lang,
+                }))}
+                label="Language"
+                placeholder="English"
+                {...field}
+              />
+            )}
           />
         </div>
         <SectionSubtitle>By company</SectionSubtitle>
@@ -78,7 +89,18 @@ export default function Prospect() {
           <FormField
             control={form.control}
             name="companySize"
-            render={({ field }) => <FormInput label="Company size" placeholder="201-500" {...field} />}
+            render={({ field }) => (
+              <FormInput
+                type="select"
+                label="Company size"
+                placeholder="201-500"
+                options={Object.keys(COMPANY_SIZES).map(size => ({
+                  label: COMPANY_SIZES[size as keyof typeof COMPANY_SIZES],
+                  value: size,
+                }))}
+                {...field}
+              />
+            )}
           />
           <FormField
             control={form.control}

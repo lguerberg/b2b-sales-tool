@@ -12,7 +12,7 @@ export const prospectSchema = z.object({
   hqLocation: z.string(),
   companyType: z.string(),
   companySize: z.string(),
-  isDecisionMaker: z.boolean(),
+  isDecisionMaker: z.string(),
 })
 
 export type ProspectSchema = z.infer<typeof prospectSchema>

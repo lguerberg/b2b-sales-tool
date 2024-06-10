@@ -15,6 +15,19 @@ const client = new Typesense.Client({
   connectionTimeoutSeconds: 2,
 })
 
+export const KEY_TO_FILTER = (value: string | number | boolean) => ({
+  name: `name: ${value}`,
+  email: `email: ${value}`,
+  jobTitle: `jobTitle: ${value}`,
+  seniority: `seniority:= ${value}`,
+  language: `language:= ${value}`,
+  industry: `industry: ${value}`,
+  hqLocation: `hqLocation: ${value}`,
+  companyType: `companyType: ${value}`,
+  companySize: `companySize:= ${value}`,
+  isDecisionMaker: `isDecisionMaker:= ${value === 'TRUE'}`,
+})
+
 export const searchLeads = async (params: Partial<ProspectSchema>, page: number) =>
   client
     .collections<ProspectSchema>('leads')
@@ -23,7 +36,7 @@ export const searchLeads = async (params: Partial<ProspectSchema>, page: number)
       q: '*',
       filter_by: Object.entries(params)
         .filter(([_, value]) => value !== '' && value !== undefined)
-        .map(([key, value]) => `${key}: ${value}`)
+        .map(([key, value]) => KEY_TO_FILTER(value)[key as keyof typeof KEY_TO_FILTER])
         .join(' && '),
       page,
       per_page: PAGE_SIZE,

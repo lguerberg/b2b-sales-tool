@@ -27,7 +27,7 @@ function ProspectResults() {
   const { form, isCreating, onSubmit, setLeadIds, leadIds } = useGroupCreateForm()
 
   const params = useSearchParams()
-  const { leads, isLoading } = useLeadsSearch({
+  const { leads, isLoading, page, setPage, hasMore } = useLeadsSearch({
     name: params.get('name') || undefined,
     email: params.get('email') || undefined,
     jobTitle: params.get('jobTitle') || undefined,
@@ -37,7 +37,7 @@ function ProspectResults() {
     hqLocation: params.get('hqLocation') || undefined,
     companyType: params.get('companyType') || undefined,
     companySize: params.get('companySize') || undefined,
-    isDecisionMaker: params.get('isDecisionMaker') === 'TRUE' || undefined,
+    isDecisionMaker: params.get('isDecisionMaker') || undefined,
   })
 
   if (isLoading) {
@@ -50,7 +50,16 @@ function ProspectResults() {
         <TextButton loading={isCreating} disabled={leadIds.length === 0} onClick={() => setIsCreatingGroup(true)}>
           Create group
         </TextButton>
-        <DataTable columns={columns} data={leads?.hits?.map(hit => hit.document) || []} onRowSelect={setLeadIds} />
+        <DataTable
+          columns={columns}
+          data={leads?.hits?.map(hit => hit.document) || []}
+          onRowSelect={setLeadIds}
+          paginate
+          onNextPage={() => setPage(page + 1)}
+          onPreviousPage={() => setPage(page - 1)}
+          isFirstPage={page === 0}
+          hasMoreResults={hasMore}
+        />
       </div>
       <Dialog open={isCreatingGroup} onOpenChange={() => setIsCreatingGroup(false)}>
         <DialogContent className="h-[512px]">

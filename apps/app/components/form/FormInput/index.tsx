@@ -27,8 +27,8 @@ export default function FormInput({
             <Input onChange={onChange} placeholder={placeholder} disabled={disabled} value={value} {...field} />
           )}
           {type === 'password' && <PasswordInput onChange={onChange} {...field} />}
-          {type === 'select' && <SelectInput options={options} />}
-          {type === 'checkbox' && <CheckboxInput value={value} onChange={onChange} />}
+          {type === 'select' && <SelectInput onChange={onChange} options={options} />}
+          {type === 'checkbox' && <CheckboxInput onChange={onChange} value={value} />}
         </>
       </FormControl>
       <FormMessage />

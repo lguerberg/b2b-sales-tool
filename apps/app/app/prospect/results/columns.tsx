@@ -6,15 +6,7 @@ import { Checkbox } from '@app/components/ui/checkbox'
 import { ProspectSchema } from '@app/lib/schemas/prospect'
 import { ColumnDef } from '@tanstack/react-table'
 
-const companySizeToText = {
-  SELF_EMPLOYED: 'Self-employed',
-  ONE_TO_TEN: '1-10',
-  ELEVEN_TO_FIFTY: '11-50',
-  FIFTY_ONE_TO_TWO_HUNDRED: '51-200',
-  TWO_HUNDRED_ONE_TO_FIVE_HUNDRED: '201-500',
-  FIVE_HUNDRED_ONE_TO_ONE_THOUSAND: '501-1000',
-  ONE_THOUSAND_ONE_TO_FIVE_THOUSAND: '1001-5000',
-}
+import { COMPANY_SIZES } from '../constants'
 
 export const columns: ColumnDef<ProspectSchema>[] = [
   {
@@ -96,15 +88,13 @@ export const columns: ColumnDef<ProspectSchema>[] = [
     accessorKey: 'companySize',
     header: () => <div className="text-center">Company Size</div>,
     cell: ({ row }) => (
-      <div className="text-center">
-        {companySizeToText[row.getValue('companySize') as keyof typeof companySizeToText]}
-      </div>
+      <div className="text-center">{COMPANY_SIZES[row.getValue('companySize') as keyof typeof COMPANY_SIZES]}</div>
     ),
   },
   {
     id: 'isDecisionMaker',
     accessorKey: 'isDecisionMaker',
     header: () => <div className="text-center">Is Decision Maker</div>,
-    cell: ({ row }) => <div className="text-center">{row.getValue('isDecisionMaker')}</div>,
+    cell: ({ row }) => <div className="text-center">{row.getValue('isDecisionMaker') ? 'Yes' : 'No'}</div>,
   },
 ]

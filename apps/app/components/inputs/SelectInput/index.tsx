@@ -2,9 +2,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 
 import { SelectInputProps } from './types'
 
-export function SelectInput({ options = [] }: SelectInputProps) {
+export function SelectInput({ options = [], onChange }: SelectInputProps) {
   return (
-    <Select>
+    <Select onValueChange={onChange}>
       <SelectTrigger>
         <SelectValue />
       </SelectTrigger>

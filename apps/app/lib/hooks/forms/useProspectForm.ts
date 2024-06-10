@@ -21,7 +21,7 @@ export default function useProspectForm() {
       hqLocation: '',
       companyType: '',
       companySize: '',
-      isDecisionMaker: false,
+      isDecisionMaker: '',
     },
   })
 
